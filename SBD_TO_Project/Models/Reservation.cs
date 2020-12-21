@@ -12,11 +12,17 @@ namespace SBD_TO_Project.Models
         [Key]
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        [ForeignKey("Customer")]
-        public int IdCustomer { get; set; }
-        [ForeignKey("Seat")]
-        public int IdSeat { get; set; }
-        [ForeignKey("ScheduleEntry")]
-        public int IdScheduleEntry { get; set; }
+        
+        public int? IdCustomer { get; set; }
+        [ForeignKey("IdCustomer")]
+        public virtual Customer Customer { get; set; }
+        
+        public int? IdSeat { get; set; }
+        [ForeignKey("IdSeat")]
+        public virtual Seat Seat { get; set; }
+        
+        public int? IdScheduleEntry { get; set; }
+        [ForeignKey("IdScheduleEntry")]
+        public virtual ScheduleEntry ScheduleEntry { get; set; }
     }
 }

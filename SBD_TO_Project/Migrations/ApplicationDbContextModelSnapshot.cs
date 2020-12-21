@@ -34,6 +34,8 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdPerson");
+
                     b.ToTable("Actor");
                 });
 
@@ -44,13 +46,17 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdActor")
+                    b.Property<int?>("IdActor")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdMovie")
+                    b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdActor");
+
+                    b.HasIndex("IdMovie");
 
                     b.ToTable("ActorMovie");
                 });
@@ -101,6 +107,8 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdAddress");
+
                     b.ToTable("Cinema");
                 });
 
@@ -111,13 +119,17 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdCinema")
+                    b.Property<int?>("IdCinema")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdEmployee")
+                    b.Property<int?>("IdEmployee")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCinema");
+
+                    b.HasIndex("IdEmployee");
 
                     b.ToTable("CinemaMenager");
                 });
@@ -136,13 +148,17 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCustomer")
+                    b.Property<int?>("IdCustomer")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdMovie")
+                    b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdMovie");
 
                     b.ToTable("Comment");
                 });
@@ -158,10 +174,10 @@ namespace SBD_TO_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdCustomer")
+                    b.Property<int?>("IdCustomer")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdOrder")
+                    b.Property<int?>("IdOrder")
                         .HasColumnType("int");
 
                     b.Property<string>("Topic")
@@ -170,7 +186,11 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Complaints");
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdOrder");
+
+                    b.ToTable("Complaint");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Customer", b =>
@@ -187,6 +207,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Customer");
                 });
@@ -205,6 +227,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdPerson");
 
                     b.ToTable("Director");
                 });
@@ -236,6 +260,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Employee");
                 });
@@ -270,10 +296,10 @@ namespace SBD_TO_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdDirector")
+                    b.Property<int?>("IdDirector")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdMovieStudio")
+                    b.Property<int?>("IdMovieStudio")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -281,6 +307,10 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdDirector");
+
+                    b.HasIndex("IdMovieStudio");
 
                     b.ToTable("Movie");
                 });
@@ -292,13 +322,17 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdGenre")
+                    b.Property<int?>("IdGenre")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdMovie")
+                    b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdGenre");
+
+                    b.HasIndex("IdMovie");
 
                     b.ToTable("MovieGenre");
                 });
@@ -321,6 +355,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdAddress");
 
                     b.ToTable("MovieStudo");
                 });
@@ -349,6 +385,10 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdPayment");
+
+                    b.HasIndex("IdReservation");
 
                     b.ToTable("Order");
                 });
@@ -399,16 +439,22 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCustomer")
+                    b.Property<int?>("IdCustomer")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdScheduleEntry")
+                    b.Property<int?>("IdScheduleEntry")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdSeat")
+                    b.Property<int?>("IdSeat")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdScheduleEntry");
+
+                    b.HasIndex("IdSeat");
 
                     b.ToTable("Reservation");
                 });
@@ -423,10 +469,12 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdCinema")
+                    b.Property<int?>("IdCinema")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCinema");
 
                     b.ToTable("Schedule");
                 });
@@ -438,19 +486,25 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdMovie")
+                    b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdSchedule")
+                    b.Property<int?>("IdSchedule")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdScreeningRoom")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("idScreeningRoom")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("IdMovie");
+
+                    b.HasIndex("IdSchedule");
+
+                    b.HasIndex("IdScreeningRoom");
 
                     b.ToTable("ScheduleEntry");
                 });
@@ -462,13 +516,15 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdCinema")
+                    b.Property<int?>("IdCinema")
                         .HasColumnType("int");
 
                     b.Property<int>("ScreeningRoomNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCinema");
 
                     b.ToTable("ScreeningRoom");
                 });
@@ -480,7 +536,7 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdScreeningRoom")
+                    b.Property<int?>("IdScreeningRoom")
                         .HasColumnType("int");
 
                     b.Property<int>("RowNumber")
@@ -490,6 +546,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdScreeningRoom");
 
                     b.ToTable("Seat");
                 });
@@ -521,7 +579,264 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdPerson");
+
                     b.ToTable("User");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("IdPerson")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.ActorMovie", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Actor", "Actor")
+                        .WithMany()
+                        .HasForeignKey("IdActor");
+
+                    b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("IdMovie");
+
+                    b.Navigation("Actor");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.CinemaManager", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
+                        .WithMany()
+                        .HasForeignKey("IdCinema");
+
+                    b.HasOne("SBD_TO_Project.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("IdEmployee");
+
+                    b.Navigation("Cinema");
+
+                    b.Navigation("Employee");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("IdCustomer");
+
+                    b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("IdMovie");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Complaint", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("IdCustomer");
+
+                    b.HasOne("SBD_TO_Project.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("IdOrder");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Customer", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Director", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("IdPerson")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("IdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Movie", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Director", "Director")
+                        .WithMany()
+                        .HasForeignKey("IdDirector");
+
+                    b.HasOne("SBD_TO_Project.Models.MovieStudio", "MovieStudio")
+                        .WithMany()
+                        .HasForeignKey("IdMovieStudio");
+
+                    b.Navigation("Director");
+
+                    b.Navigation("MovieStudio");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.MovieGenre", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Genre", "Genre")
+                        .WithMany()
+                        .HasForeignKey("IdGenre");
+
+                    b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("IdMovie");
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Movie");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.MovieStudio", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Order", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Payment", "Payment")
+                        .WithMany()
+                        .HasForeignKey("IdPayment")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SBD_TO_Project.Models.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("IdReservation")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("Reservation");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Reservation", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("IdCustomer");
+
+                    b.HasOne("SBD_TO_Project.Models.ScheduleEntry", "ScheduleEntry")
+                        .WithMany()
+                        .HasForeignKey("IdScheduleEntry");
+
+                    b.HasOne("SBD_TO_Project.Models.Seat", "Seat")
+                        .WithMany()
+                        .HasForeignKey("IdSeat");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("ScheduleEntry");
+
+                    b.Navigation("Seat");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
+                        .WithMany()
+                        .HasForeignKey("IdCinema");
+
+                    b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.ScheduleEntry", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
+                        .WithMany()
+                        .HasForeignKey("IdMovie");
+
+                    b.HasOne("SBD_TO_Project.Models.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("IdSchedule");
+
+                    b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
+                        .WithMany()
+                        .HasForeignKey("IdScreeningRoom");
+
+                    b.Navigation("Movie");
+
+                    b.Navigation("Schedule");
+
+                    b.Navigation("ScreeningRoom");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.ScreeningRoom", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
+                        .WithMany()
+                        .HasForeignKey("IdCinema");
+
+                    b.Navigation("Cinema");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Seat", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
+                        .WithMany()
+                        .HasForeignKey("IdScreeningRoom");
+
+                    b.Navigation("ScreeningRoom");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.User", b =>
+                {
+                    b.HasOne("SBD_TO_Project.Models.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("IdPerson")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
                 });
 #pragma warning restore 612, 618
         }

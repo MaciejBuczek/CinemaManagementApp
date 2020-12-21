@@ -16,11 +16,15 @@ namespace SBD_TO_Project.Models
         public string Position { get; set; }
         public float Salary { get; set; }
         [DataType(DataType.Date)]
+        [Display(Name = "Start date of work")]
         public DateTime StartDate { get; set; }
         [DataType(DataType.Date)]
+        [Display(Name = "End date of work")]
         public DateTime? EndDate { get; set; }
         public int? IdManager { get; set; }
-        [ForeignKey("User")]
+        
         public int IdUser { get; set; }
+        [ForeignKey("IdUser")]
+        public virtual User User { get; set; }
     }
 }

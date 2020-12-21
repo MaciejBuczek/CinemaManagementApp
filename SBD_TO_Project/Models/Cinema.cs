@@ -13,7 +13,9 @@ namespace SBD_TO_Project.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [ForeignKey("Address")]
+       
         public int IdAddress { get; set; }
+        [ForeignKey("IdAddress")]
+        public virtual Address Address { get; set; }
     }
 }

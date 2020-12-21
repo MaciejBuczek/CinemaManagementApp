@@ -13,10 +13,16 @@ namespace SBD_TO_Project.Models
         public int Id { get; set; }
         public DateTime Date { get; set; }
         [Required]
+        [Display(Name = "Comment")]
         public string CommentContent { get; set; }
-        [ForeignKey("Customer")]
-        public int IdCustomer { get; set; }
-        [ForeignKey("Movie")]
-        public int IdMovie { get; set; }
+        
+        public int? IdCustomer { get; set; }
+        [ForeignKey("IdCustomer")]
+        public virtual Customer Customer { get; set; }
+        
+        public int? IdMovie { get; set; }
+        [ForeignKey("IdMovie")]
+        public virtual Movie Movie { get; set; }
+
     }
 }

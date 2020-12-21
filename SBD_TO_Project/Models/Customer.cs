@@ -12,7 +12,9 @@ namespace SBD_TO_Project.Models
         [Key]
         public int Id { get; set; }
         public bool IsRegularCustomer { get; set; }
-        [ForeignKey("User")]
+        
         public int IdUser { get; set; }
+        [ForeignKey("IdUser")]
+        public virtual User User { get; set; }
     }
 }

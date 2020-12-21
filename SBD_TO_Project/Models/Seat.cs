@@ -11,9 +11,13 @@ namespace SBD_TO_Project.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Seat number")]
         public int SeatNumber { get; set; }
+        [Display(Name = "Row number")]
         public int RowNumber { get; set; }
-        [ForeignKey("ScreeningRoom")]
-        public int IdScreeningRoom { get; set; }
+        
+        public int? IdScreeningRoom { get; set; }
+        [ForeignKey("IdScreeningRoom")]
+        public virtual ScreeningRoom ScreeningRoom { get; set; }
     }
 }

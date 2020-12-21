@@ -14,33 +14,33 @@ namespace SBD_TO_Project.Data
           
         }
 
-        public DbSet<Genre> Genre { get; set; }
-        public DbSet<Movie> Movie { get; set; }
+        public DbSet<Genre> Genre { get; set; }                     //ok
+        public DbSet<Movie> Movie { get; set; }                     //ok
 
-        public DbSet<MovieGenre> MovieGenre { get; set; }
-        public DbSet<ActorMovie> ActorMovie { get; set; }
-        public DbSet<CinemaManager> CinemaMenager { get; set; }
-        public DbSet<MovieStudio> MovieStudo { get; set; }
+        public DbSet<MovieGenre> MovieGenre { get; set; }           //ok
+        public DbSet<ActorMovie> ActorMovie { get; set; }           //ok
+        public DbSet<CinemaManager> CinemaMenager { get; set; }     //ok
+        public DbSet<MovieStudio> MovieStudo { get; set; }          //ok
 
-        public DbSet<Schedule> Schedule { get; set; }
-        public DbSet<Seat> Seat { get; set; }
-        public DbSet<ScreeningRoom> ScreeningRoom { get; set; }
-        public DbSet<ScheduleEntry> ScheduleEntry { get; set; }
-        public DbSet<Reservation> Reservation { get; set; }
-        public DbSet<Payment> Payment { get; set; }
-        public DbSet<Order> Order { get; set; }
+        public DbSet<Schedule> Schedule { get; set; }               //ok
+        public DbSet<Seat> Seat { get; set; }                       //ok
+        public DbSet<ScreeningRoom> ScreeningRoom { get; set; }     //ok
+        public DbSet<ScheduleEntry> ScheduleEntry { get; set; }     //ok
+        public DbSet<Reservation> Reservation { get; set; }         //ok
+        public DbSet<Payment> Payment { get; set; }                 //ok
+        public DbSet<Order> Order { get; set; }                     //ok
 
-        public DbSet<Address> Address { get; set; }
-        public DbSet<Cinema> Cinema { get; set; }
+        public DbSet<Address> Address { get; set; }                 //ok
+        public DbSet<Cinema> Cinema { get; set; }                   //ok
 
-        public DbSet<Person> Person { get; set; }
-        public DbSet<User> User { get; set; }
-        public DbSet<Actor> Actor { get; set; }
-        public DbSet<Director> Director { get; set; }
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Person> Person { get; set; }                   //ok
+        public DbSet<User> User { get; set; }                       //ok
+        public DbSet<Actor> Actor { get; set; }                     //ok
+        public DbSet<Director> Director { get; set; }               //ok
+        public DbSet<Employee> Employee { get; set; }               //ok
+        public DbSet<Customer> Customer { get; set; }               //ok
 
-        public DbSet<Comment> Comment { get; set; }
-        public DbSet<Complaint> Complaints { get; set; }
+        public DbSet<Comment> Comment { get; set; }                 //ok
+        public DbSet<Complaint> Complaint { get; set; }            //ok
     }
 }

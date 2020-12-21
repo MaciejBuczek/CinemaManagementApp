@@ -16,7 +16,9 @@ namespace SBD_TO_Project.Models
         public string Name { get; set; }
         [DataType(DataType.Date)]
         public DateTime EstablishedDate { get; set; }
-        [ForeignKey("Address")]
+        
         public int IdAddress { get; set; }
+        [ForeignKey("IdAddress")]
+        public virtual Address Address { get; set; }
     }
 }

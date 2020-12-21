@@ -13,7 +13,9 @@ namespace SBD_TO_Project.Models
         [Key]
         public int Id { get; set; }
         public string Alias { get; set; }
-        [ForeignKey("Person")]
+
         public int IdPerson { get; set; }
+        [ForeignKey("IdPerson")]
+        public virtual Person Person { get; set; }
     }
 }

@@ -15,10 +15,12 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Country { get; set; }
         [Required]
+        [Display(Name = "Postal code")]
         public string PostalCode { get; set; }
         [Required]
         public string Town { get; set; }
         public string Street { get; set; }
+        [Display(Name = "Apartment number")]
         public string ApartmentNumber { get; set; }
     }
 }

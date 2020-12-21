@@ -19,7 +19,9 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Email { get; set; }
         public short SecurityLevel { get; set; }
-        [ForeignKey("Person")]
+        
         public int IdPerson { get; set; }
+        [ForeignKey("IdPerson")]
+        public virtual Person Person { get; set; }
     }
 }

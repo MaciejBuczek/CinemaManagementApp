@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,10 +15,15 @@ namespace SBD_TO_Project.Models
         public string Title { get; set; }
         [Required]
         public string Description { get; set; }
+        [Display(Name = "Age rating")]
         public int? AgeRating { get; set; }
-        [ForeignKey("Director")]
-        public int IdDirector { get; set; }
-        [ForeignKey("MovieStudio")]
-        public int IdMovieStudio { get; set; }
+
+        public int? IdDirector { get; set; }
+        [ForeignKey("IdDirector")]
+        public virtual Director Director { get; set; }
+
+        public int? IdMovieStudio { get; set; }
+        [ForeignKey("IdMovieStudio")]
+        public virtual MovieStudio MovieStudio { get; set; }
     }
 }

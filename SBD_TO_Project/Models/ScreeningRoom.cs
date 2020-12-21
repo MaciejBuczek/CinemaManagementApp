@@ -11,8 +11,11 @@ namespace SBD_TO_Project.Models
     {
         [Key]
         public int Id { get; set; }
+        [Display(Name = "Screening Room Number")]
         public int ScreeningRoomNumber { get; set; }
-        [ForeignKey("Cinema")]
-        public int IdCinema { get; set; }
+        
+        public int? IdCinema { get; set; }
+        [ForeignKey("IdCinema")]
+        public virtual Cinema Cinema { get; set; }
     }
 }
