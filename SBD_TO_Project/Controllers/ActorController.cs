@@ -55,7 +55,7 @@ namespace SBD_TO_Project.Controllers
             return View(obj);
         }
 
-        //Edut Post
+        //Edit Post
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Actor obj)
