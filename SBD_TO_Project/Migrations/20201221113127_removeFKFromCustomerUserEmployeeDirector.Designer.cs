@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201221113127_removeFKFromCustomerUserEmployeeDirector")]
+    partial class removeFKFromCustomerUserEmployeeDirector
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -418,9 +420,14 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasBaseType("SBD_TO_Project.Models.Address");
 
+                    b.Property<int>("IdAddress")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("IdAddress");
 
                     b.ToTable("Cinema");
                 });
@@ -432,9 +439,14 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("EstablishedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdAddress")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasIndex("IdAddress");
 
                     b.ToTable("MovieStudio");
                 });
@@ -699,6 +711,14 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("SBD_TO_Project.Models.Cinema", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("SBD_TO_Project.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.MovieStudio", b =>
@@ -708,6 +728,14 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("SBD_TO_Project.Models.MovieStudio", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+
+                    b.HasOne("SBD_TO_Project.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("IdAddress")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>

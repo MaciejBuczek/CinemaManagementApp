@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Controllers
 {
-    public class MovieController : Controller
+    /*public class MovieController : Controller
     {
         private readonly ApplicationDbContext _db;
 
@@ -32,7 +32,7 @@ namespace SBD_TO_Project.Controllers
         //Upsert Get
         public IActionResult Upsert(int? id)
         {
-            IEnumerable<SelectListItem> DirectorDropDown = _db.Director.Select(i => new SelectListItem
+            /*IEnumerable<SelectListItem> DirectorDropDown = _db.Director.Select(i => new SelectListItem
             {
                 Text = _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).FirstName + " " + _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).LastName
             });;
@@ -54,6 +54,7 @@ namespace SBD_TO_Project.Controllers
                 }
                 return View(movie);
             }
+            return View(movie);
         }
 
         //Upsert Post
@@ -96,5 +97,5 @@ namespace SBD_TO_Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-    }
+    }*/
 }

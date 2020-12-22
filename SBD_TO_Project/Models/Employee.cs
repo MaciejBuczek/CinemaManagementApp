@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class Employee
+    [Table("Employee")]
+    public class Employee : User
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Position { get; set; }
         public float Salary { get; set; }
@@ -23,8 +22,5 @@ namespace SBD_TO_Project.Models
         public DateTime? EndDate { get; set; }
         public int? IdManager { get; set; }
         
-        public int IdUser { get; set; }
-        [ForeignKey("IdUser")]
-        public virtual User User { get; set; }
     }
 }

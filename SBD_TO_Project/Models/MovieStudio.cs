@@ -8,17 +8,12 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class MovieStudio
+    [Table("MovieStudio")]
+    public class MovieStudio : Address
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [DataType(DataType.Date)]
         public DateTime EstablishedDate { get; set; }
-        
-        public int IdAddress { get; set; }
-        [ForeignKey("IdAddress")]
-        public virtual Address Address { get; set; }
     }
 }

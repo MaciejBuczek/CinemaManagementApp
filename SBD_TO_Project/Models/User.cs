@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class User
+    [Table("User")]
+    public class User : Person
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Login { get; set; }
         [Required]
@@ -19,9 +18,5 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Email { get; set; }
         public short SecurityLevel { get; set; }
-        
-        public int IdPerson { get; set; }
-        [ForeignKey("IdPerson")]
-        public virtual Person Person { get; set; }
     }
 }

@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class Director
+    [Table("Director")]
+    public class Director : Person
     {
-        [Key]
-        public int Id { get; set; }
         public string Alias { get; set; }
-        
-        public int IdPerson { get; set; }
-        [ForeignKey("IdPerson")]
-        public virtual Person Person { get; set; }
+
     }
 }

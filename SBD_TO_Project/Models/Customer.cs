@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class Customer
+    [Table("Customer")]
+    public class Customer : User
     {
-        [Key]
-        public int Id { get; set; }
         public bool IsRegularCustomer { get; set; }
-        
-        public int IdUser { get; set; }
-        [ForeignKey("IdUser")]
-        public virtual User User { get; set; }
     }
 }

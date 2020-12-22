@@ -20,7 +20,6 @@ namespace SBD_TO_Project.Data
         public DbSet<MovieGenre> MovieGenre { get; set; }           //ok
         public DbSet<ActorMovie> ActorMovie { get; set; }           //ok
         public DbSet<CinemaManager> CinemaMenager { get; set; }     //ok
-        public DbSet<MovieStudio> MovieStudo { get; set; }          //ok
 
         public DbSet<Schedule> Schedule { get; set; }               //ok
         public DbSet<Seat> Seat { get; set; }                       //ok
@@ -32,6 +31,7 @@ namespace SBD_TO_Project.Data
 
         public DbSet<Address> Address { get; set; }                 //ok
         public DbSet<Cinema> Cinema { get; set; }                   //ok
+        public DbSet<MovieStudio> MovieStudo { get; set; }          //ok
 
         public DbSet<Person> Person { get; set; }                   //ok
         public DbSet<User> User { get; set; }                       //ok
@@ -41,6 +41,6 @@ namespace SBD_TO_Project.Data
         public DbSet<Customer> Customer { get; set; }               //ok
 
         public DbSet<Comment> Comment { get; set; }                 //ok
-        public DbSet<Complaint> Complaint { get; set; }            //ok
+        public DbSet<Complaint> Complaint { get; set; }             //ok
     }
 }

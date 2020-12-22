@@ -7,15 +7,10 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class Cinema
+    [Table("Cinema")]
+    public class Cinema : Address
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-       
-        public int IdAddress { get; set; }
-        [ForeignKey("IdAddress")]
-        public virtual Address Address { get; set; }
     }
 }
