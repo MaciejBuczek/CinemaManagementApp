@@ -1,0 +1,87 @@
+﻿@model SBD_TO_Project.Models.MovieStudio
+
+<form method="post" asp-action="DeleteConfirm">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Delete Movie Studio
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Name" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="EstablishedDate"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="EstablishedDate" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Country"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Country" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="PostalCode"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="PostalCode" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Town"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Town" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Street"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Street" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ApartmentNumber"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="ApartmentNumber" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-100" value="Delete" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
+

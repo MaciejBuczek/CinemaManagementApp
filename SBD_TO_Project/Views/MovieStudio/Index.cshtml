@@ -1,0 +1,90 @@
+﻿@model IEnumerable<SBD_TO_Project.Models.MovieStudio>
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Movie Studios List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="Create" class=" btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Add Movie Studio
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Movie Studio Name
+                    </th>
+                    <th>
+                        Established Date
+                    </th>
+                    <th>
+                        Country
+                    </th>
+                    <th>
+                        Postal code
+                    </th>
+                    <th>
+                        Town
+                    </th>
+                    <th>
+                        Street
+                    </th>
+                    <th>
+                        Apartment no.
+                    </th>
+                    <th>
+                        Modify movie studio
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>
+                            @obj.Name
+                        </td>
+                        <td>
+                            @obj.EstablishedDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @obj.Country
+                        </td>
+                        <td>
+                            @obj.PostalCode
+                        </td>
+                        <td>
+                            @obj.Town
+                        </td>
+                        <td>
+                            @obj.Street
+                        </td>
+                        <td>
+                            @obj.ApartmentNumber
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:40%">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:40%">
+                                <i class="fas fa-trash-alt"></i> 
+                            </a>    
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No movie studios exists.</p>
+    }
+</div>
+
