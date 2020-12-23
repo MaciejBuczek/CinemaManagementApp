@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
+using SBD_TO_Project.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Controllers
 {
-    /*public class MovieController : Controller
+    public class MovieController : Controller
     {
         private readonly ApplicationDbContext _db;
 
@@ -25,6 +26,7 @@ namespace SBD_TO_Project.Controllers
             {
                 obj.Director = _db.Director.FirstOrDefault(u => u.Id == obj.IdDirector);
                 obj.MovieStudio = _db.MovieStudo.FirstOrDefault(u => u.Id == obj.IdMovieStudio);
+                obj.MovieGenres = _db.MovieGenre.Where(u => u.IdMovie == obj.Id).ToList();
             }
             return View(objList);
         }
@@ -32,29 +34,46 @@ namespace SBD_TO_Project.Controllers
         //Upsert Get
         public IActionResult Upsert(int? id)
         {
+            MovieVM movieVM = new MovieVM()
+            {
+                Movie = new Movie(),
+                GenreSelectList = _db.Genre.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+                ActorSelectList = _db.Actor.Select(i => new SelectListItem {
+                    Text = i.FirstName + " " + i.LastName,
+                    Value = i.Id.ToString()
+                }),
+                DirectorSelectList = _db.Director.Select(i => new SelectListItem
+                {
+                    Text = i.FirstName + " " + i.LastName,
+                    Value = id.ToString()
+                })
+            };
+
             /*IEnumerable<SelectListItem> DirectorDropDown = _db.Director.Select(i => new SelectListItem
             {
                 Text = _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).FirstName + " " + _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).LastName
             });;
 
 
-            ViewBag.DirectorDropDown = DirectorDropDown;
+            ViewBag.DirectorDropDown = DirectorDropDown;*/
 
-            Movie movie = new Movie();
             if(id == null)
             {
-                return View(movie);
+                return View(movieVM);
             }
             else
             {
-                movie = _db.Movie.Find(id);
-                if(movie == null)
+                movieVM.Movie = _db.Movie.Find(id);
+                if(movieVM.Movie == null)
                 {
                     return NotFound();
                 }
-                return View(movie);
+                return View(movieVM);
             }
-            return View(movie);
         }
 
         //Upsert Post
@@ -97,5 +116,5 @@ namespace SBD_TO_Project.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
-    }*/
+    }
 }

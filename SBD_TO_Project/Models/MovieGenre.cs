@@ -20,5 +20,7 @@ namespace SBD_TO_Project.Models
         public int? IdGenre { get; set; }
         [ForeignKey("IdGenre")]
         public virtual Genre Genre { get; set; }
+
+
     }
 }

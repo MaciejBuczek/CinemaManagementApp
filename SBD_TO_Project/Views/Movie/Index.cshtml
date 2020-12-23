@@ -29,6 +29,9 @@
                         Age Rating
                     </th>
                     <th>
+                        Genres
+                    </th>
+                    <th>
                         Modify Movie
                     </th>
                 </tr>
@@ -45,6 +48,12 @@
                     </td>
                     <td>
                         @obj.AgeRating
+                    </td>
+                    <td>
+                        @foreach(var joinObj in obj.MovieGenres)
+                        {
+                            @joinObj.IdGenre
+                        }
                     </td>
                     <td class="d-flex justify-content-center">
                         <a asp-route-Id="@obj.Id" asp-action="Upsert" class="btn btn-warning m-0 mr-4" style="width:40%">Edit</a>

@@ -12,5 +12,7 @@ namespace SBD_TO_Project.Models
     {
         [Required]
         public string Name { get; set; }
+
+        public virtual ICollection<CinemaEmployee> CinemaEmployees { get; set; }
     }
 }
