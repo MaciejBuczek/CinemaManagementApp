@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    public class CinemaManager
+    public class CinemaEmployee
     {
         [Key]
         public int Id { get; set; }

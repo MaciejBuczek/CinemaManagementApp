@@ -10,7 +10,10 @@ namespace SBD_TO_Project.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
+
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
     }
 }

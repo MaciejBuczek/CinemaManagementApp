@@ -21,6 +21,8 @@ namespace SBD_TO_Project.Models
         [Display(Name = "End date of work")]
         public DateTime? EndDate { get; set; }
         public int? IdManager { get; set; }
+
+        public virtual ICollection<CinemaEmployee> CinemaEmployees { get; set; }
         
     }
 }

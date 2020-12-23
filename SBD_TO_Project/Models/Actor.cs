@@ -13,5 +13,6 @@ namespace SBD_TO_Project.Models
     {
         public string Alias { get; set; }
 
+        public virtual ICollection<ActorMovie> ActorMovies { get; set; }
     }
 }

@@ -25,5 +25,9 @@ namespace SBD_TO_Project.Models
         public int? IdMovieStudio { get; set; }
         [ForeignKey("IdMovieStudio")]
         public virtual MovieStudio MovieStudio { get; set; }
+
+        public virtual ICollection<MovieGenre> MovieGenres { get; set; }
+
+        public virtual ICollection<ActorMovie> ActorMovies { get; set; }
     }
 }

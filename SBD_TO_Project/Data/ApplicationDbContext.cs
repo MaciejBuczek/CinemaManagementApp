@@ -19,7 +19,7 @@ namespace SBD_TO_Project.Data
 
         public DbSet<MovieGenre> MovieGenre { get; set; }           //ok
         public DbSet<ActorMovie> ActorMovie { get; set; }           //ok
-        public DbSet<CinemaManager> CinemaMenager { get; set; }     //ok
+        public DbSet<CinemaEmployee> CinemaEmployee { get; set; }     //ok
 
         public DbSet<Schedule> Schedule { get; set; }               //ok
         public DbSet<Seat> Seat { get; set; }                       //ok
