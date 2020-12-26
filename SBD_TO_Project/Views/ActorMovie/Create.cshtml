@@ -1,0 +1,77 @@
+﻿@model SBD_TO_Project.Models.ViewModels.MovieActorVM
+
+<form method="post" asp-action="Create">
+    <input asp-for="IdMovie" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Add Genres To Movie
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8 offset-2">
+                @if (Model.ActorCheckBoxList.Count > 0)
+                {
+                    <div class="form-group row">
+                        <table class=" table table-bordered table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%">
+                                        Is selected
+                                    </th>
+                                    <th>
+                                        First Name
+                                    </th>
+                                    <th>
+                                        Last Name
+                                    </th>
+                                    <th>
+                                        Alias
+                                    </th>
+                                </tr>
+                            </thead>
+                            @for (int i = 0; i < Model.ActorCheckBoxList.Count(); i++)
+                            {
+                                @Html.HiddenFor(a => a.ActorCheckBoxList[i].Id)
+                                <tr>
+                                    <td>
+                                        @Html.CheckBoxFor(a => a.ActorCheckBoxList[i].IsChecked)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(a => ((Actor)a.ActorCheckBoxList[i].Object).FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(a => ((Actor)a.ActorCheckBoxList[i].Object).LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(a => ((Actor)a.ActorCheckBoxList[i].Object).Alias)
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p>All possible actors are already assigned to this movie</p>
+                }
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        @if (Model.ActorCheckBoxList.Count > 0)
+                        {
+                            <div class="col">
+                                <input type="submit" class="btn btn-info w-100" value="Add" />
+                            </div>
+                        }
+                        <div class="col">
+                            <a asp-route-Id="@Model.IdMovie" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>

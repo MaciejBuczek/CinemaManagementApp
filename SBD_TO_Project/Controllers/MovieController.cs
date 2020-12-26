@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
 using SBD_TO_Project.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +16,12 @@ namespace SBD_TO_Project.Controllers
     public class MovieController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MovieController(ApplicationDbContext db)
+        public MovieController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -25,95 +30,164 @@ namespace SBD_TO_Project.Controllers
             foreach(var obj in objList)
             {
                 obj.Director = _db.Director.FirstOrDefault(u => u.Id == obj.IdDirector);
-                obj.MovieStudio = _db.MovieStudo.FirstOrDefault(u => u.Id == obj.IdMovieStudio);
+                obj.MovieStudio = _db.MovieStudio.FirstOrDefault(u => u.Id == obj.IdMovieStudio);
                 obj.MovieGenres = _db.MovieGenre.Where(u => u.IdMovie == obj.Id).ToList();
+                obj.ActorMovies = _db.ActorMovie.Where(u => u.IdMovie == obj.Id).ToList();
             }
             return View(objList);
         }
 
-        //Upsert Get
-        public IActionResult Upsert(int? id)
+        //Create get
+        public IActionResult Create()
         {
             MovieVM movieVM = new MovieVM()
             {
                 Movie = new Movie(),
-                GenreSelectList = _db.Genre.Select(i => new SelectListItem
-                {
-                    Text = i.Name,
-                    Value = i.Id.ToString()
-                }),
-                ActorSelectList = _db.Actor.Select(i => new SelectListItem {
-                    Text = i.FirstName + " " + i.LastName,
-                    Value = i.Id.ToString()
-                }),
                 DirectorSelectList = _db.Director.Select(i => new SelectListItem
                 {
                     Text = i.FirstName + " " + i.LastName,
-                    Value = id.ToString()
+                    Value = i.Id.ToString()
+
+                }),
+                MovieStudioSelectList = _db.MovieStudio.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
-
-            /*IEnumerable<SelectListItem> DirectorDropDown = _db.Director.Select(i => new SelectListItem
-            {
-                Text = _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).FirstName + " " + _db.Person.FirstOrDefault(u => u.Id == i.IdPerson).LastName
-            });;
-
-
-            ViewBag.DirectorDropDown = DirectorDropDown;*/
-
-            if(id == null)
-            {
-                return View(movieVM);
-            }
-            else
-            {
-                movieVM.Movie = _db.Movie.Find(id);
-                if(movieVM.Movie == null)
-                {
-                    return NotFound();
-                }
-                return View(movieVM);
-            }
+            return View(movieVM);
         }
 
-        //Upsert Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Movie obj)
+        //Create post
+        public IActionResult Create(MovieVM movieVM)
         {
             if (ModelState.IsValid)
             {
-                _db.Add(obj);
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                string upload = webRootPath + WebConstants.ImageMoviePath;
+                string fileName = Guid.NewGuid().ToString();
+                string extension = Path.GetExtension(files[0].FileName);
+
+                using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+                movieVM.Movie.Image = fileName + extension;
+
+                _db.Movie.Add(movieVM.Movie);
                 _db.SaveChanges();
+
+                //return RedirectToAction("Create","MovieGenre", new { id = movieVM.Movie.Id});
                 return RedirectToAction("Index");
+
             }
-            return View(obj);
+            return View(movieVM);
         }
 
-        //Delete Get
-        public IActionResult Delete(int id)
+        //Create get
+        public IActionResult Edit(int Id)
         {
-            var obj = _db.Genre.Find(id);
-            if (obj == null)
+            MovieVM movieVM = new MovieVM()
             {
-                return NotFound();
-            }
+                Movie = _db.Movie.Find(Id),
+                DirectorSelectList = _db.Director.Select(i => new SelectListItem
+                {
+                    Text = i.FirstName + " " + i.LastName,
+                    Value = i.Id.ToString()
 
-            return View(obj);
+                }),
+                MovieStudioSelectList = _db.MovieStudio.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
+            if (movieVM.Movie == null)
+                return NotFound();
+            else
+                return View(movieVM);
         }
 
-        //Delete Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirm(int id)
+        //Create post
+        public IActionResult Edit(MovieVM movieVM)
         {
-            var obj = _db.Genre.Find(id);
-            if (obj==null)
+            var files = HttpContext.Request.Form.Files;
+            string webRootPath = _webHostEnvironment.WebRootPath;
+            var objFromDb = _db.Movie.AsNoTracking().FirstOrDefault(m => m.Id == movieVM.Movie.Id);
+            if(files.Count > 0)
+            {
+                string upload = webRootPath + WebConstants.ImageMoviePath;
+                string fileName = Guid.NewGuid().ToString();
+                string extension = Path.GetExtension(files[0].FileName);
+
+                var oldFile = Path.Combine(upload, objFromDb.Image);
+
+                if (System.IO.File.Exists(oldFile))
+                {
+                    System.IO.File.Delete(oldFile);
+                }
+
+                using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+                movieVM.Movie.Image = fileName + extension;
+            }
+            else
+            {
+                movieVM.Movie.Image = objFromDb.Image;
+            }
+            _db.Movie.Update(movieVM.Movie);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        //delete get
+        public IActionResult Delete(int Id)
+        {
+            if (Id == 0)
             {
                 return NotFound();
             }
-            _db.Remove(obj);
+            Movie movie = _db.Movie.Find(Id);
+            movie.Director = _db.Director.Find(movie.IdDirector);
+            movie.MovieStudio = _db.MovieStudio.Find(movie.IdMovieStudio);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            return View(movie);
+        }
+
+        //delete post
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(int id)
+        {
+            var obj = _db.Movie.Find(id);
+            if (obj == null)
+                return NotFound();
+
+            string upload = _webHostEnvironment.WebRootPath + WebConstants.ImageMoviePath;
+
+            var oldFile = Path.Combine(upload, obj.Image);
+
+            if (System.IO.File.Exists(oldFile))
+            {
+                System.IO.File.Delete(oldFile);
+            }
+
+            _db.Movie.Remove(obj);
             _db.SaveChanges();
+
             return RedirectToAction("Index");
         }
     }

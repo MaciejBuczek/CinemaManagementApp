@@ -18,10 +18,14 @@ namespace SBD_TO_Project.Models
         [Display(Name = "Age rating")]
         public int? AgeRating { get; set; }
 
+        public string Image { get; set; }
+
+        [Display(Name = "Director")]
         public int? IdDirector { get; set; }
         [ForeignKey("IdDirector")]
         public virtual Director Director { get; set; }
 
+        [Display(Name = "Movie Studio")]
         public int? IdMovieStudio { get; set; }
         [ForeignKey("IdMovieStudio")]
         public virtual MovieStudio MovieStudio { get; set; }
