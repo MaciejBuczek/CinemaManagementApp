@@ -31,7 +31,7 @@ namespace SBD_TO_Project.Data
 
         public DbSet<Address> Address { get; set; }                 //ok
         public DbSet<Cinema> Cinema { get; set; }                   //ok
-        public DbSet<MovieStudio> MovieStudo { get; set; }          //ok
+        public DbSet<MovieStudio> MovieStudio { get; set; }          //ok
 
         public DbSet<Person> Person { get; set; }                   //ok
         public DbSet<User> User { get; set; }                       //ok

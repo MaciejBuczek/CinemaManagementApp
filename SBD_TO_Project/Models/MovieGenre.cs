@@ -13,11 +13,11 @@ namespace SBD_TO_Project.Models
         [Key]
         public int Id { get; set; }
         
-        public int? IdMovie { get; set; }
+        public int IdMovie { get; set; }
         [ForeignKey("IdMovie")]
         public virtual Movie Movie { get; set; }
         
-        public int? IdGenre { get; set; }
+        public int IdGenre { get; set; }
         [ForeignKey("IdGenre")]
         public virtual Genre Genre { get; set; }
 

@@ -8,9 +8,8 @@ namespace SBD_TO_Project.Models.ViewModels
 {
     public class MovieVM
     {
-        public Movie Movie { get; set; }
-        public IEnumerable<SelectListItem> GenreSelectList { get; set; }
-        public IEnumerable<SelectListItem> ActorSelectList { get; set; }
+        public Movie Movie { get; set; }      
         public IEnumerable<SelectListItem> DirectorSelectList { get; set; }
+        public IEnumerable<SelectListItem> MovieStudioSelectList { get; set; }
     }
 }

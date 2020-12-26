@@ -1,0 +1,54 @@
+﻿@model List<SBD_TO_Project.Models.MovieGenre>
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Genre List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-route-Id="@Model.First().IdMovie" asp-action="Create" class=" btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Add Genres
+            </a>
+            <a asp-controller="Movie" asp-action="Index" class=" btn btn-info">
+                Back
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.First().Id != 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Genre Name
+                    </th>
+                    <th>
+                        Remove Genre From Movie
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr>
+                        <td>
+                            @obj.Genre.Name
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:40%">
+                                <i class="fas fa-trash-alt"></i> &nbsp;
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No genre exists.</p>
+    }
+</div>

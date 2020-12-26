@@ -1,19 +1,11 @@
 ﻿@model SBD_TO_Project.Models.Movie
 
-@{
-    var title = "Add New Movie";
-}
-
-<form method="post" enctype="multipart/form-data">
-    @if(Model.Id != 0)
-    {
-        title = "Edit Movie";
-        <input asp-for="Id" hidden />
-    }
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
     <div class="border p-3">
         <div class="form-group row">
             <h2 class="text-dark pl-3">
-                @title
+                Delete Movie
             </h2>
         </div>
         <div class="row">
@@ -23,8 +15,7 @@
                         <label asp-for="Title"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
+                        <input asp-for="Title" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
@@ -32,8 +23,7 @@
                         <label asp-for="Description"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Description" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <textarea asp-for="Description" disabled class="form-control summernote"></textarea>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -41,40 +31,29 @@
                         <label asp-for="AgeRating"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="AgeRating" class="form-control" />
-                        <span asp-validation-for="AgeRating" class="text-danger"></span>
+                        <input asp-for="AgeRating" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        Image
+                        <label asp-for="IdDirector"></label>
                     </div>
                     <div class="col-8">
-                        <input type="file" name="files" id="uploadBox" asp-for="Description" class="form-control" />
+                        <input value="@(Model.Director.FirstName+" "+Model.Director.LastName)" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        Director
+                        <label asp-for="IdMovieStudio"></label>
                     </div>
                     <div class="col-8">
-                        <select asp-items="@ViewBag.DirectorDropDown" class="form-control">
-                            <option disabled selected>--Select Director--</option>
-                        </select>
-                        @*<span asp-validation-for="Description" class="text-danger"></span>*@
+                        <input asp-for="MovieStudio.Name" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            @if (Model.Id != 0)
-                            {
-                                <input type="submit" class="btn btn-info w-100" value="Update" />
-                            }
-                            else
-                            {
-                                <input type="submit" class="btn btn-primary w-100" value="Create" />
-                            }
+                            <button type="submit" class="btn btn-danger w-100" value="Create" >Delete</button>
                         </div>
                         <div class="col">
                             <a asp-action="Index" class="btn btn-primary w-100">Back</a>
@@ -83,8 +62,19 @@
                 </div>
             </div>
             <div class="col-4">
-                @* Keep this empty *@
+                <img src="@(WebConstants.ImageMoviePath + Model.Image)" style="width: 100%; border-radius: 5px; border: 1px solid #bbb" />
             </div>
         </div>
     </div>
 </form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 250,
+            });
+        });
+        $('.summernote').summernote('disable');
+    </script>
+}
