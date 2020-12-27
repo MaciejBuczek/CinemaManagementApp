@@ -5,6 +5,14 @@
     var actorOutput = "";
     var genreOutput = "";
 
+    var filterClasses = "";
+
+    foreach(var obj in Model.MovieGenres)
+    {
+        filterClasses += obj.Genre.Name;
+        filterClasses += " ";
+    }
+
     if (Model.ActorMovies.Count > 0) {
         actorOutput = "<ul>";
         foreach(var actor in Model.ActorMovies)
@@ -39,7 +47,7 @@
     }
 }
 
-<div class="col-lg-6 col-md-6 pb-4">
+<div class="col-lg-6 col-md-6 pb-4 filter @filterClasses">
     <div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
         <div class="card-body px-3 pt-3 pb-1 row">
             <div class="col-6">
