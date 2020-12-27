@@ -1,0 +1,80 @@
+﻿@model SBD_TO_Project.Models.Cinema
+
+<form method="post">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                More details of cinema
+            </h2>
+        </div>
+        <div class="row">
+            <table class=" table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Country
+                        </th>
+                        <th>
+                            PostalCode
+                        </th>
+                        <th>
+                            Town
+                        </th>
+                        <th>
+                            Street
+                        </th>
+                        <th>
+                            Apartment no.
+                        </th>
+                        <th>
+                            Modify Cinema
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Model.Name
+                        </td>
+                        <td>
+                            @Model.Country
+                        </td>
+                        <td>
+                            @Model.PostalCode
+                        </td>
+                        <td>
+                            @Model.Town
+                        </td>
+                        <td>
+                            @Model.Street
+                        </td>
+                        <td>
+                            @Model.ApartmentNumber
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            <a asp-route-Id="@Model.Id" asp-action="Employees" class="btn btn-success m-0 mr-4" style="width:100%">
+                                <i class="fas fa-briefcase"></i>
+                            </a>
+                            <a asp-route-Id="@Model.Id" asp-action="Schedules" class="btn btn-primary m-0 mr-4" style="width:100%">
+                                <i class="fas fa-clipboard-list"></i>
+                            </a>
+                            <a asp-route-Id="@Model.Id" asp-action="Rooms" class="btn btn-dark m-0 mr-4" style="width:100%">
+                                <i class="fas fa-film"></i>
+                            </a>
+                            <a asp-route-Id="@Model.Id" asp-action="Edit" class="btn btn-warning m-0" style="width:100%">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+
+

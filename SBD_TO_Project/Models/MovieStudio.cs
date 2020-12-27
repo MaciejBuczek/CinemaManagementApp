@@ -14,6 +14,7 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Name { get; set; }
         [DataType(DataType.Date)]
+        [Display(Name = "Established date")]
         public DateTime EstablishedDate { get; set; }
     }
 }
