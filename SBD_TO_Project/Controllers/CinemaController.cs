@@ -8,19 +8,29 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Controllers
 {
-    public class ActorController : Controller
+    public class CinemaController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public ActorController(ApplicationDbContext db)
+        public CinemaController(ApplicationDbContext db)
         {
             _db = db;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Actor> objList = _db.Actor;
+            IEnumerable<Cinema> objList = _db.Cinema;
             return View(objList);
+        }
+
+        public IActionResult Details(int id)
+        {
+            if (id == 0)
+                return NotFound();
+            var obj = _db.Cinema.Find(id);
+            if (obj == null)
+                return NotFound();
+            return View(obj);
         }
 
         //Create Get
@@ -32,7 +42,7 @@ namespace SBD_TO_Project.Controllers
         //Create Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Actor obj)
+        public IActionResult Create(Cinema obj)
         {
             if (ModelState.IsValid)
             {
@@ -43,22 +53,21 @@ namespace SBD_TO_Project.Controllers
             return View(obj);
         }
 
-        //Edit Get
+        //Edit get
         public IActionResult Edit(int id)
         {
-            var obj = _db.Actor.Find(id);
-            if (obj == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
-
+            var obj = _db.Cinema.Find(id);
+            if (obj == null)
+                return NotFound();
             return View(obj);
         }
-        //TestCommit
+
         //Edit Post
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Actor obj)
+        public IActionResult Edit(Cinema obj)
         {
             if (ModelState.IsValid)
             {
@@ -69,28 +78,29 @@ namespace SBD_TO_Project.Controllers
             return View(obj);
         }
 
-        //Delete Get
+        //Delete get
         public IActionResult Delete(int id)
         {
-            var obj = _db.Actor.Find(id);
-            if (obj == null)
-            {
+            if (id == 0)
                 return NotFound();
-            }
+
+            var obj = _db.Cinema.Find(id);
+            if (obj == null)
+                return NotFound();
 
             return View(obj);
         }
+
 
         //Delete Post
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirm(int id)
         {
-            var obj = _db.Actor.Find(id);
+            var obj = _db.Cinema.Find(id);
             if (obj == null)
-            {
                 return NotFound();
-            }
+
             _db.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
