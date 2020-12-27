@@ -91,7 +91,6 @@ namespace SBD_TO_Project.Controllers
             return View(obj);
         }
 
-
         //Delete Post
         [HttpPost]
         [ValidateAntiForgeryToken]

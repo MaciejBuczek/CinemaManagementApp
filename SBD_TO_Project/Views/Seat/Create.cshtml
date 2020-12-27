@@ -1,0 +1,61 @@
+﻿@model SBD_TO_Project.Models.ViewModels.SeatVM
+
+<form method="post" asp-action="Create">
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Asign Seats
+            </h2>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <table class=" table table-bordered table-striped" style="width:100%">
+                    <tbody>
+                        @for (int i = Model.Seats.GetLength(0) - 1; i >= 0; i--)
+                        {
+                            <tr>
+                                <td style="text-align:center">
+                                    @(i+1)
+                                </td>
+                                @for (int j = 0; j < Model.Seats.GetLength(1); j++)
+                                {
+                                    
+                                    <td style="text-align:center">
+                                        @Html.HiddenFor(s => s.Seats[i, j].Id)
+                                        @Html.HiddenFor(s => s.Seats[i, j].RowNumber)
+                                        @Html.HiddenFor(s => s.Seats[i, j].SeatNumber)
+                                        @Html.HiddenFor(s => s.Seats[i, j].ScreeningRoomId)
+                                        @Html.CheckBoxFor(s => s.Seats[i, j].IsChecked)
+                                    </td>
+                                }
+                            </tr>
+                        }
+                        <tr>
+                            <td style="text-align:center"></td>
+                            @for (int i = 0; i < Model.Seats.GetLength(1); i++)
+                            {
+                                <td style="text-align:center">
+                                    @(i+1)
+                                </td>
+                            }
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Add" />
+                        </div>
+                        <div class="col">
+                            <a asp-route-Id="@Model.IdCinema" asp-controller="ScreeningRoom" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>
