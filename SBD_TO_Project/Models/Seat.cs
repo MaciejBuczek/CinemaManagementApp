@@ -16,7 +16,7 @@ namespace SBD_TO_Project.Models
         [Display(Name = "Row number")]
         public int RowNumber { get; set; }
         
-        public int? IdScreeningRoom { get; set; }
+        public int IdScreeningRoom { get; set; }
         [ForeignKey("IdScreeningRoom")]
         public virtual ScreeningRoom ScreeningRoom { get; set; }
     }
