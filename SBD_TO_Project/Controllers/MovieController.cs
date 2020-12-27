@@ -26,11 +26,9 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Movie> objList = _db.Movie;
+            IEnumerable<Movie> objList = _db.Movie.Include(d => d.Director).Include(ms => ms.MovieStudio);
             foreach(var obj in objList)
             {
-                obj.Director = _db.Director.FirstOrDefault(u => u.Id == obj.IdDirector);
-                obj.MovieStudio = _db.MovieStudio.FirstOrDefault(u => u.Id == obj.IdMovieStudio);
                 obj.MovieGenres = _db.MovieGenre.Where(u => u.IdMovie == obj.Id).ToList();
                 obj.ActorMovies = _db.ActorMovie.Where(u => u.IdMovie == obj.Id).ToList();
             }
