@@ -8,6 +8,8 @@ namespace SBD_TO_Project.Models.ViewModels
     public class SeatVM
     {
         public int IdCinema { get; set; }
-        public SeatCheckBox[,] Seats { get; set; }
+
+        public List<List<SeatCheckBox>> Seats { get; set; }
+        //public SeatCheckBox[,] Seats { get; set; }
     }
 }

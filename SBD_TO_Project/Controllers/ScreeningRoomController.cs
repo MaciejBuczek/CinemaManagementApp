@@ -24,8 +24,10 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index(int Id)
         {
-            List<ScreeningRoom> screeningRooms = _db.ScreeningRoom.Where(c => c.Cinema.Id == Id).ToList();
-            ScreeningRoomVM obj = new ScreeningRoomVM() {IdCinema = Id, screeningRooms = screeningRooms };
+            ScreeningRoomVM obj = new ScreeningRoomVM() {
+                IdCinema = Id,
+                ScreeningRooms = _db.ScreeningRoom.Where(sc => sc.IdCinema == Id).ToList()
+            };
             return View(obj);
         }
 

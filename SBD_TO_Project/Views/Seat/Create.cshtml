@@ -12,36 +12,24 @@
             <div class="col-8 offset-2">
                 <table class=" table table-bordered table-striped" style="width:100%">
                     <tbody>
-                        @for (int i = Model.Seats.GetLength(0) - 1; i >= 0; i--)
+                        @for(int i=0; i<Model.Seats.Count; i++)
                         {
                             <tr>
-                                <td style="text-align:center">
-                                    @(i+1)
-                                </td>
-                                @for (int j = 0; j < Model.Seats.GetLength(1); j++)
-                                {
-                                    
-                                    <td style="text-align:center">
-                                        @Html.HiddenFor(s => s.Seats[i, j].Id)
-                                        @Html.HiddenFor(s => s.Seats[i, j].RowNumber)
-                                        @Html.HiddenFor(s => s.Seats[i, j].SeatNumber)
-                                        @Html.HiddenFor(s => s.Seats[i, j].ScreeningRoomId)
-                                        @Html.CheckBoxFor(s => s.Seats[i, j].IsChecked)
-                                    </td>
-                                }
-                            </tr>
-                        }
-                        <tr>
-                            <td style="text-align:center"></td>
-                            @for (int i = 0; i < Model.Seats.GetLength(1); i++)
+                            @for (int j =0; j<Model.Seats[i].Count; j++)
                             {
                                 <td style="text-align:center">
-                                    @(i+1)
+                                    @Html.HiddenFor(s => Model.Seats[i][j].Id)
+                                    @Html.HiddenFor(s => Model.Seats[i][j].RowNumber)
+                                    @Html.HiddenFor(s => Model.Seats[i][j].SeatNumber)
+                                    @Html.HiddenFor(s => Model.Seats[i][j].ScreeningRoomId)
+                                    @Html.CheckBoxFor(s => Model.Seats[i][j].IsChecked)
                                 </td>
                             }
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr>
+                        }
+                        
+                       </tbody>
+                    </table>
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">

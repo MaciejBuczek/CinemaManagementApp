@@ -14,8 +14,10 @@ namespace SBD_TO_Project.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         
-        public int? IdCinema { get; set; }
+        public int IdCinema { get; set; }
         [ForeignKey("IdCinema")]
         public virtual Cinema Cinema { get; set; }
+
+        public virtual ICollection<ScheduleEntry> ScheduleEntries { get; set; }
     }
 }

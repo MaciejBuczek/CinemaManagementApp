@@ -31,12 +31,27 @@ namespace SBD_TO_Project.Controllers
         public IActionResult Create(int Id)
         {
             ScreeningRoom screeningRoom = _db.ScreeningRoom.Find(Id);
-            SeatCheckBox[,] seats = new SeatCheckBox[screeningRoom.NumberOfRows, screeningRoom.NumberOfSeatsPerRow];
+            //SeatCheckBox[,] seats = new SeatCheckBox[screeningRoom.NumberOfRows, screeningRoom.NumberOfSeatsPerRow];
+            List<List<SeatCheckBox>> seatCheckBoxeList = new List<List<SeatCheckBox>>();
             for (int i = 0; i < screeningRoom.NumberOfRows; i++)
+            {
+                List<SeatCheckBox> tempList = new List<SeatCheckBox>();
                 for (int j = 0; j < screeningRoom.NumberOfSeatsPerRow; j++)
-                    seats[i, j] = new SeatCheckBox() { RowNumber = i, SeatNumber = j, ScreeningRoomId = Id, IsChecked = true };
+                {
+                    tempList.Add(new SeatCheckBox()
+                    {
+                        RowNumber = i,
+                        SeatNumber = j,
+                        ScreeningRoomId = Id,
+                        IsChecked = true
+                    });
+                    //seats[i, j] = new SeatCheckBox() { RowNumber = i, SeatNumber = j, ScreeningRoomId = Id, IsChecked = true };
+                }
+                seatCheckBoxeList.Add(tempList);
+            }
 
-            SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seats };
+            //SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seats };
+            SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seatCheckBoxeList };
             return View(obj);
         }
 
@@ -44,7 +59,7 @@ namespace SBD_TO_Project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(SeatVM seatVM)
         {
-            for(int i = 0; i < seatVM.Seats.GetLength(0); i++)
+            /*for(int i = 0; i < seatVM.Seats.GetLength(0); i++)
                 for(int j = 0; j < seatVM.Seats.GetLength(1); j++)
                     if (seatVM.Seats[i, j].IsChecked)
                     {
@@ -56,7 +71,7 @@ namespace SBD_TO_Project.Controllers
                         };
                         _db.Add(seat);
                         _db.SaveChanges();
-                    }
+                    }*/
             return RedirectToAction("Index", "ScreeningRoom", new { id = seatVM.IdCinema });
         }
     }

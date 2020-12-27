@@ -8,6 +8,6 @@ namespace SBD_TO_Project.Models.ViewModels
     public class ScreeningRoomVM
     {
         public int IdCinema { get; set; }
-        public List<ScreeningRoom> screeningRooms { get; set; }
+        public List<ScreeningRoom> ScreeningRooms { get; set; }
     }
 }
