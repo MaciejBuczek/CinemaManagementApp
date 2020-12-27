@@ -19,7 +19,7 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<MovieStudio> objList = _db.MovieStudo;
+            IEnumerable<MovieStudio> objList = _db.MovieStudio;
             return View(objList);
         }
 
@@ -48,7 +48,7 @@ namespace SBD_TO_Project.Controllers
         {
             if (id == 0)
                 return NotFound();
-            var obj = _db.MovieStudo.Find(id);
+            var obj = _db.MovieStudio.Find(id);
             if (obj == null)
                 return NotFound();
             return View(obj);
@@ -75,7 +75,7 @@ namespace SBD_TO_Project.Controllers
             if (id == 0)
                 return NotFound();
 
-            var obj = _db.MovieStudo.Find(id);
+            var obj = _db.MovieStudio.Find(id);
             if (obj == null)
                 return NotFound();
 
@@ -88,7 +88,7 @@ namespace SBD_TO_Project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirm(int id)
         {
-            var obj = _db.MovieStudo.Find(id);
+            var obj = _db.MovieStudio.Find(id);
             if (obj == null)
                 return NotFound();
 
