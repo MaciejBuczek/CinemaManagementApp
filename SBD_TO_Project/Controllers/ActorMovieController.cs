@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
 using SBD_TO_Project.Models.ViewModels;
@@ -18,11 +19,7 @@ namespace SBD_TO_Project.Controllers
         }
         public IActionResult Index(int Id)
         {
-            List<ActorMovie> objList = _db.ActorMovie.Where(am => am.IdMovie == Id).ToList();
-            foreach (var obj in objList)
-            {
-                obj.Actor = _db.Actor.FirstOrDefault(a => a.Id == obj.IdActor);
-            }
+            List<ActorMovie> objList = _db.ActorMovie.Where(am => am.IdMovie == Id).Include(a => a.Actor).ToList();
             if(objList.Count == 0)
             {
                 objList.Add(new ActorMovie
