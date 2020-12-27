@@ -1,0 +1,61 @@
+﻿@model SBD_TO_Project.Models.ViewModels.MovieBrowseVM
+
+<div class="container">
+    <div class="text-center">
+        <button class="btn btn-dark filter-button" data-filter="all">All</button>
+        @foreach (var obj in Model.Genres)
+        {
+            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name.Replace(' ','_')">@obj.Name</button>
+        }
+    </div>
+    <br />
+    <div class="row">
+        @foreach (var movie in Model.Movies)
+        {
+            <partial name="_IdividualMovieCard" model="movie" />
+        }
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function showDescription(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Description</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+        function showActors(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Actors</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+        function showGenres(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Genres</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+}
