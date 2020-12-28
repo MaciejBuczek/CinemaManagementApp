@@ -36,6 +36,14 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
+                        <label asp-for="Length"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Length" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
                         <label asp-for="IdDirector"></label>
                     </div>
                     <div class="col-8">
@@ -53,7 +61,7 @@
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <button type="submit" class="btn btn-danger w-100" value="Create" >Delete</button>
+                            <button type="submit" class="btn btn-danger w-100" value="Create">Delete</button>
                         </div>
                         <div class="col">
                             <a asp-action="Index" class="btn btn-primary w-100">Back</a>

@@ -13,10 +13,10 @@ namespace SBD_TO_Project.Models
         public int Id { get; set; }
         [Display(Name = "Screening Room Number")]
         public int ScreeningRoomNumber { get; set; }
-        [Display(Name = "Number of rows")]
+        /*[Display(Name = "Number of rows")]
         public int NumberOfRows { get; set; }
         [Display(Name = "Number of seats per row")]
-        public int NumberOfSeatsPerRow { get; set; }
+        public int NumberOfSeatsPerRow { get; set; }*/
         
         public int IdCinema { get; set; }
         [ForeignKey("IdCinema")]

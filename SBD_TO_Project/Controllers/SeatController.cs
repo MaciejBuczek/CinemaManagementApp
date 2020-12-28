@@ -30,8 +30,7 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Create(int Id)
         {
-            ScreeningRoom screeningRoom = _db.ScreeningRoom.Find(Id);
-            //SeatCheckBox[,] seats = new SeatCheckBox[screeningRoom.NumberOfRows, screeningRoom.NumberOfSeatsPerRow];
+            /*ScreeningRoom screeningRoom = _db.ScreeningRoom.Find(Id);
             List<List<SeatCheckBox>> seatCheckBoxeList = new List<List<SeatCheckBox>>();
             for (int i = 0; i < screeningRoom.NumberOfRows; i++)
             {
@@ -45,33 +44,18 @@ namespace SBD_TO_Project.Controllers
                         ScreeningRoomId = Id,
                         IsChecked = true
                     });
-                    //seats[i, j] = new SeatCheckBox() { RowNumber = i, SeatNumber = j, ScreeningRoomId = Id, IsChecked = true };
                 }
                 seatCheckBoxeList.Add(tempList);
             }
 
-            //SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seats };
-            SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seatCheckBoxeList };
-            return View(obj);
+            SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seatCheckBoxeList };*/
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(SeatVM seatVM)
-        {
-            /*for(int i = 0; i < seatVM.Seats.GetLength(0); i++)
-                for(int j = 0; j < seatVM.Seats.GetLength(1); j++)
-                    if (seatVM.Seats[i, j].IsChecked)
-                    {
-                        Seat seat = new Seat()
-                        {
-                            IdScreeningRoom = seatVM.Seats[i, j].ScreeningRoomId,
-                            RowNumber = seatVM.Seats[i, j].RowNumber,
-                            SeatNumber = seatVM.Seats[i, j].SeatNumber
-                        };
-                        _db.Add(seat);
-                        _db.SaveChanges();
-                    }*/
+        { 
             return RedirectToAction("Index", "ScreeningRoom", new { id = seatVM.IdCinema });
         }
     }

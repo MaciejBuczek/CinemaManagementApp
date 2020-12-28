@@ -1,0 +1,59 @@
+﻿@model SBD_TO_Project.Models.ScheduleEntry
+
+<form method="post" asp-action="DeletePost">
+    <input asp-for="Id" hidden />
+    <input asp-for="IdSchedule" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Delete Movie
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="StartTime"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="StartTime" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="IdMovie"></label>
+                    </div>
+                    <div class="col-8">
+                        <input value="@Model.Movie.Title" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="IdScreeningRoom"></label>
+                    </div>
+                    <div class="col-8">
+                        <input value="@Model.ScreeningRoom.ScreeningRoomNumber" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Price" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger w-100" value="Create">Delete</button>
+                        </div>
+                        <div class="col">
+                            <a asp-route-id="@Model.IdSchedule" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
