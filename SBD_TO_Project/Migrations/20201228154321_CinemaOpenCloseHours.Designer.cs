@@ -10,8 +10,8 @@ using SBD_TO_Project.Data;
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201221113244_removeFKFromMovieStudioCinema")]
-    partial class removeFKFromMovieStudioCinema
+    [Migration("20201228154321_CinemaOpenCloseHours")]
+    partial class CinemaOpenCloseHours
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,10 +28,10 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("IdActor")
+                    b.Property<int>("IdActor")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdMovie")
+                    b.Property<int>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -73,7 +73,7 @@ namespace SBD_TO_Project.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaManager", b =>
+            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasIndex("IdEmployee");
 
-                    b.ToTable("CinemaMenager");
+                    b.ToTable("CinemaEmployee");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
@@ -190,6 +190,12 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int?>("IdMovieStudio")
                         .HasColumnType("int");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("Length")
+                        .HasColumnType("time");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -210,10 +216,10 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("IdGenre")
+                    b.Property<int>("IdGenre")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdMovie")
+                    b.Property<int>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -333,7 +339,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdCinema")
+                    b.Property<int>("IdCinema")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -350,17 +356,20 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("IdMovie")
+                    b.Property<int>("IdMovie")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSchedule")
+                    b.Property<int>("IdSchedule")
                         .HasColumnType("int");
 
                     b.Property<int?>("IdScreeningRoom")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Time")
-                        .HasColumnType("datetime2");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
 
                     b.HasKey("Id");
 
@@ -383,8 +392,15 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int?>("IdCinema")
                         .HasColumnType("int");
 
-                    b.Property<int>("ScreeningRoomNumber")
+                    b.Property<int>("NumberOfRows")
                         .HasColumnType("int");
+
+                    b.Property<int>("NumberOfSeatsPerRow")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScreeningRoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -400,8 +416,11 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int?>("IdScreeningRoom")
+                    b.Property<int>("IdScreeningRoom")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("bit");
 
                     b.Property<int>("RowNumber")
                         .HasColumnType("int");
@@ -420,9 +439,15 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasBaseType("SBD_TO_Project.Models.Address");
 
+                    b.Property<DateTime>("CloseTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpenTime")
+                        .HasColumnType("datetime2");
 
                     b.ToTable("Cinema");
                 });
@@ -519,26 +544,30 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("SBD_TO_Project.Models.ActorMovie", b =>
                 {
                     b.HasOne("SBD_TO_Project.Models.Actor", "Actor")
-                        .WithMany()
-                        .HasForeignKey("IdActor");
+                        .WithMany("ActorMovies")
+                        .HasForeignKey("IdActor")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("IdMovie");
+                        .WithMany("ActorMovies")
+                        .HasForeignKey("IdMovie")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Actor");
 
                     b.Navigation("Movie");
                 });
 
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaManager", b =>
+            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
                 {
                     b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
-                        .WithMany()
+                        .WithMany("CinemaEmployees")
                         .HasForeignKey("IdCinema");
 
                     b.HasOne("SBD_TO_Project.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("CinemaEmployees")
                         .HasForeignKey("IdEmployee");
 
                     b.Navigation("Cinema");
@@ -594,12 +623,16 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("SBD_TO_Project.Models.MovieGenre", b =>
                 {
                     b.HasOne("SBD_TO_Project.Models.Genre", "Genre")
-                        .WithMany()
-                        .HasForeignKey("IdGenre");
+                        .WithMany("MovieGenres")
+                        .HasForeignKey("IdGenre")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
-                        .WithMany()
-                        .HasForeignKey("IdMovie");
+                        .WithMany("MovieGenres")
+                        .HasForeignKey("IdMovie")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Genre");
 
@@ -650,7 +683,9 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
                         .WithMany()
-                        .HasForeignKey("IdCinema");
+                        .HasForeignKey("IdCinema")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Cinema");
                 });
@@ -659,11 +694,15 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
                         .WithMany()
-                        .HasForeignKey("IdMovie");
+                        .HasForeignKey("IdMovie")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("IdSchedule");
+                        .WithMany("ScheduleEntries")
+                        .HasForeignKey("IdSchedule")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
                         .WithMany()
@@ -688,8 +727,10 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("SBD_TO_Project.Models.Seat", b =>
                 {
                     b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
-                        .WithMany()
-                        .HasForeignKey("IdScreeningRoom");
+                        .WithMany("Seats")
+                        .HasForeignKey("IdScreeningRoom")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ScreeningRoom");
                 });
@@ -755,6 +796,43 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("SBD_TO_Project.Models.Employee", "Id")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Genre", b =>
+                {
+                    b.Navigation("MovieGenres");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Movie", b =>
+                {
+                    b.Navigation("ActorMovies");
+
+                    b.Navigation("MovieGenres");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>
+                {
+                    b.Navigation("ScheduleEntries");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.ScreeningRoom", b =>
+                {
+                    b.Navigation("Seats");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
+                {
+                    b.Navigation("CinemaEmployees");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>
+                {
+                    b.Navigation("ActorMovies");
+                });
+
+            modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
+                {
+                    b.Navigation("CinemaEmployees");
                 });
 #pragma warning restore 612, 618
         }

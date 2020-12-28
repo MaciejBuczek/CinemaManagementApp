@@ -387,7 +387,13 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdCinema")
+                    b.Property<int?>("IdCinema")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRows")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfSeatsPerRow")
                         .HasColumnType("int");
 
                     b.Property<string>("ScreeningRoomNumber")
@@ -431,9 +437,15 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasBaseType("SBD_TO_Project.Models.Address");
 
+                    b.Property<DateTime>("CloseTime")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpenTime")
+                        .HasColumnType("datetime2");
 
                     b.ToTable("Cinema");
                 });
@@ -705,9 +717,7 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
                         .WithMany()
-                        .HasForeignKey("IdCinema")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdCinema");
 
                     b.Navigation("Cinema");
                 });
