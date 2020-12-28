@@ -100,6 +100,18 @@ namespace SBD_TO_Project.Controllers
             if (obj == null)
                 return NotFound();
 
+            IEnumerable<ScreeningRoom> screeningRooms = _db.ScreeningRoom.Where(sc => sc.IdCinema == id);
+            IEnumerable<Schedule> schedules = _db.Schedule.Where(sc => sc.IdCinema == id);
+            foreach(var sc in screeningRooms)
+            {
+                _db.Remove(sc);
+                _db.SaveChanges();
+            }
+            foreach (var s in schedules)
+            {
+                _db.Remove(s);
+                _db.SaveChanges();
+            }
             _db.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201228120840_ScreeningRoomChange")]
+    partial class ScreeningRoomChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -360,14 +362,11 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("IdSchedule")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdScreeningRoom")
+                    b.Property<int>("IdScreeningRoom")
                         .HasColumnType("int");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("Time")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -387,7 +386,13 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("IdCinema")
+                    b.Property<int?>("IdCinema")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfRows")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumberOfSeatsPerRow")
                         .HasColumnType("int");
 
                     b.Property<string>("ScreeningRoomNumber")
@@ -692,7 +697,9 @@ namespace SBD_TO_Project.Migrations
 
                     b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
                         .WithMany()
-                        .HasForeignKey("IdScreeningRoom");
+                        .HasForeignKey("IdScreeningRoom")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Movie");
 
@@ -705,9 +712,7 @@ namespace SBD_TO_Project.Migrations
                 {
                     b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
                         .WithMany()
-                        .HasForeignKey("IdCinema")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdCinema");
 
                     b.Navigation("Cinema");
                 });

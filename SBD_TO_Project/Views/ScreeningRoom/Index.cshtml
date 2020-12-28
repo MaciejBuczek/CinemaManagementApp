@@ -50,10 +50,22 @@
                             @*@obj.NumberOfSeatsPerRow*@
                         </td>
                         <td class="d-flex justify-content-center">
-                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:40%">
+                            @if (obj.Seats.Count > 0)
+                            {
+                                <a asp-route-Id="@obj.Id" asp-action="Show" class="btn btn-secondary m-0 mr-4" style="width:100%">
+                                    <i class="fas fa-eye"></i>&nbsp; Show
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-route-Id="@obj.Id" asp-controller="Seat" asp-action="Create" class="btn btn-success m-0 mr-4" style="width:100%">
+                                    <i class="fas fa-plus-circle"></i>&nbsp; Add
+                                </a>
+                            }
+                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:100%">
                                 <i class="fas fa-edit"></i>&nbsp; Edit
                             </a>
-                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:40%">
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:100%">
                                 <i class="fas fa-trash-alt"></i>&nbsp; Delete
                             </a>
                         </td>
