@@ -15,6 +15,7 @@ namespace SBD_TO_Project.Models
         public int SeatNumber { get; set; }
         [Display(Name = "Row number")]
         public int RowNumber { get; set; }
+        public bool IsValid { get; set; }
         
         public int IdScreeningRoom { get; set; }
         [ForeignKey("IdScreeningRoom")]

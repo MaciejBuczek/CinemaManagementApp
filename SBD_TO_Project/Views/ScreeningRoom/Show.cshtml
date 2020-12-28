@@ -1,14 +1,21 @@
 ﻿@model SBD_TO_Project.Models.ViewModels.SeatVM
 
-<form method="post" asp-action="Create">
-    <input asp-for="IdCinema" hidden />
-    <div class="border p-3">
-        <div class="form-group row">
-            <h2 class="text-dark pl-3">
-                Asign Seats
-            </h2>
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Seats in Screening Room</h2>
         </div>
-        <br>
+        <div class="col-6 text-right">
+            <a asp-route-id="@Model.IdCinema" asp-action="Index" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Seats.Count > 0)
+    {
         <div class="row">
             <div class="col-8 offset-2">
                 <table class=" table table-bordered table-striped" style="width:100%">
@@ -23,7 +30,7 @@
                                         @Html.HiddenFor(s => Model.Seats[i][j].RowNumber)
                                         @Html.HiddenFor(s => Model.Seats[i][j].SeatNumber)
                                         @Html.HiddenFor(s => Model.Seats[i][j].IdScreeningRoom)
-                                        @Html.CheckBoxFor(s => Model.Seats[i][j].IsValid)
+                                        @Html.CheckBoxFor(s => Model.Seats[i][j].IsValid, new { @disabled = "disabled" })
                                     </td>
                                 }
                             </tr>
@@ -34,10 +41,10 @@
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
                         <div class="col">
-                            <input type="submit" class="btn btn-info w-100" value="Asign" />
+                            <a asp-route-id="@Model.Seats[0][0].IdScreeningRoom" asp-controller="Seat" asp-action="Edit" class="btn btn-info w-100">Edit</a>
                         </div>
                         <div class="col">
-                            <a asp-route-Id="@Model.IdCinema" asp-controller="ScreeningRoom" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                            <a asp-route-Id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
                         </div>
                     </div>
                 </div>
@@ -46,5 +53,9 @@
                 @* Keep this empty *@
             </div>
         </div>
-    </div>
-</form>
+    }
+    else
+    {
+        <p>No seats exists.</p>
+    }
+</div>

@@ -31,27 +31,24 @@ namespace SBD_TO_Project.Controllers
         public IActionResult Create(int Id)
         {
             ScreeningRoom screeningRoom = _db.ScreeningRoom.Find(Id);
-            //SeatCheckBox[,] seats = new SeatCheckBox[screeningRoom.NumberOfRows, screeningRoom.NumberOfSeatsPerRow];
-            List<List<SeatCheckBox>> seatCheckBoxeList = new List<List<SeatCheckBox>>();
+            List<List<Seat>> seats = new List<List<Seat>>();
             for (int i = 0; i < screeningRoom.NumberOfRows; i++)
             {
-                List<SeatCheckBox> tempList = new List<SeatCheckBox>();
+                List<Seat> tempList = new List<Seat>();
                 for (int j = 0; j < screeningRoom.NumberOfSeatsPerRow; j++)
                 {
-                    tempList.Add(new SeatCheckBox()
+                    tempList.Add(new Seat()
                     {
                         RowNumber = i,
                         SeatNumber = j,
-                        ScreeningRoomId = Id,
-                        IsChecked = true
+                        IdScreeningRoom = Id,
+                        IsValid = true
                     });
-                    //seats[i, j] = new SeatCheckBox() { RowNumber = i, SeatNumber = j, ScreeningRoomId = Id, IsChecked = true };
                 }
-                seatCheckBoxeList.Add(tempList);
+                seats.Add(tempList);
             }
 
-            //SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seats };
-            SeatVM obj = new SeatVM() { IdCinema = screeningRoom.IdCinema, Seats = seatCheckBoxeList };
+            SeatVM obj = new SeatVM() { IdCinema = (int)screeningRoom.IdCinema, Seats = seats };
             return View(obj);
         }
 
@@ -59,20 +56,57 @@ namespace SBD_TO_Project.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(SeatVM seatVM)
         {
-            /*for(int i = 0; i < seatVM.Seats.GetLength(0); i++)
-                for(int j = 0; j < seatVM.Seats.GetLength(1); j++)
-                    if (seatVM.Seats[i, j].IsChecked)
-                    {
-                        Seat seat = new Seat()
-                        {
-                            IdScreeningRoom = seatVM.Seats[i, j].ScreeningRoomId,
-                            RowNumber = seatVM.Seats[i, j].RowNumber,
-                            SeatNumber = seatVM.Seats[i, j].SeatNumber
-                        };
-                        _db.Add(seat);
-                        _db.SaveChanges();
-                    }*/
+            foreach(var row in seatVM.Seats)
+            {
+                foreach(var seat in row)
+                {
+                    _db.Add(seat);
+                    _db.SaveChanges();
+                }
+            }
+
             return RedirectToAction("Index", "ScreeningRoom", new { id = seatVM.IdCinema });
         }
+
+        public IActionResult Edit(int Id)
+        {
+            var obj = _db.ScreeningRoom.Find(Id);
+            if (obj == null)
+                return NotFound();
+
+            List<Seat> seats = _db.Seat.Where(s => s.IdScreeningRoom == obj.Id).ToList();
+            List<List<Seat>> listOfSeats = new List<List<Seat>>();
+
+            for (int i = 0; i < obj.NumberOfRows; i++)
+            {
+                List<Seat> tempList = new List<Seat>();
+                for (int j = 0; j < obj.NumberOfSeatsPerRow; j++)
+                {
+                    tempList.Add(seats[j + i * obj.NumberOfSeatsPerRow]);
+                }
+                listOfSeats.Add(tempList);
+            }
+
+            SeatVM seatVM = new SeatVM() { IdCinema = (int)obj.IdCinema, Seats = listOfSeats };
+
+            return View(seatVM);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(SeatVM seatVM)
+        {
+            foreach (var row in seatVM.Seats)
+            {
+                foreach (var seat in row)
+                {
+                    _db.Update(seat);
+                    _db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Index", "ScreeningRoom", new { id = seatVM.IdCinema });
+        }
+
     }
 }

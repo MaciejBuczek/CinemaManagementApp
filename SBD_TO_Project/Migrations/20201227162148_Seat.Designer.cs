@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201227162148_Seat")]
+    partial class Seat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -393,9 +395,8 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("NumberOfSeatsPerRow")
                         .HasColumnType("int");
 
-                    b.Property<string>("ScreeningRoomNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ScreeningRoomNumber")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -718,7 +719,7 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("SBD_TO_Project.Models.Seat", b =>
                 {
                     b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
-                        .WithMany("Seats")
+                        .WithMany()
                         .HasForeignKey("IdScreeningRoom")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -804,11 +805,6 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>
                 {
                     b.Navigation("ScheduleEntries");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.ScreeningRoom", b =>
-                {
-                    b.Navigation("Seats");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
