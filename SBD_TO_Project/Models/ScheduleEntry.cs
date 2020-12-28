@@ -11,16 +11,23 @@ namespace SBD_TO_Project.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateTime Time { get; set; }
+
+        [Required]
+        public TimeSpan StartTime { get; set; }
         
-        public int? IdMovie { get; set; }
+        [Required]
+        public double Price { get; set; }
+
+        [Display(Name = "Movie")]
+        public int IdMovie { get; set; }
         [ForeignKey("IdMovie")]
         public virtual Movie Movie { get; set; }
         
-        public int? IdSchedule { get; set; }
+        public int IdSchedule { get; set; }
         [ForeignKey("IdSchedule")]
         public virtual Schedule Schedule { get; set; }
-        
+
+        [Display(Name = "Screening Room")]
         public int? IdScreeningRoom { get; set; }
         [ForeignKey("IdScreeningRoom")]
         public virtual ScreeningRoom ScreeningRoom { get; set; }

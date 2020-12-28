@@ -18,6 +18,9 @@ namespace SBD_TO_Project.Models
         [Display(Name = "Age rating")]
         public int? AgeRating { get; set; }
 
+        [Required]
+        public TimeSpan Length { get; set; }
+
         public string Image { get; set; }
 
         [Display(Name = "Director")]

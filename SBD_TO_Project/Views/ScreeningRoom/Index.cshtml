@@ -1,0 +1,81 @@
+﻿@model SBD_TO_Project.Models.ViewModels.ScreeningRoomVM
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Screening Rooms List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-route-id="@Model.IdCinema" asp-action="Create" class=" btn btn-primary">
+                <i class="fas fa-plus"></i> &nbsp; Add Rooms
+            </a>
+            <a asp-route-id="@Model.IdCinema" asp-controller="Cinema" asp-action="Details" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.ScreeningRooms.Count > 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Screening Room Name
+                    </th>
+                    <th>
+                        Number Of Rows
+                    </th>
+                    <th>
+                        Number Of Seats Per Row
+                    </th>
+                    <th>
+                        Manage Screening Room
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model.ScreeningRooms)
+                {
+                    <tr>
+                        <td>
+                            @obj.ScreeningRoomNumber
+                        </td>
+                        <td>
+                            @obj.NumberOfRows
+                        </td>
+                        <td>
+                            @obj.NumberOfSeatsPerRow
+                        </td>
+                        <td class="d-flex justify-content-center">
+                            @if (obj.Seats.Count > 0)
+                            {
+                                <a asp-route-Id="@obj.Id" asp-action="Show" class="btn btn-secondary m-0 mr-4" style="width:100%">
+                                    <i class="fas fa-eye"></i>&nbsp; Show
+                                </a>
+                            }
+                            else
+                            {
+                                <a asp-route-Id="@obj.Id" asp-controller="Seat" asp-action="Create" class="btn btn-success m-0 mr-4" style="width:100%">
+                                    <i class="fas fa-plus-circle"></i>&nbsp; Add
+                                </a>
+                            }
+                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:100%">
+                                <i class="fas fa-edit"></i>&nbsp; Edit
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:100%">
+                                <i class="fas fa-trash-alt"></i>&nbsp; Delete
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No screening rooms exists.</p>
+    }
+</div>

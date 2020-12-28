@@ -23,7 +23,7 @@
                         <label asp-for="Movie.Description"></label>
                     </div>
                     <div class="col-8">
-                        <textarea asp-for="Movie.Description" class="form-control summernote" ></textarea>
+                        <textarea asp-for="Movie.Description" class="form-control summernote"></textarea>
                         <span asp-validation-for="Movie.Description" class="text-danger"></span>
                     </div>
                 </div>
@@ -34,6 +34,15 @@
                     <div class="col-8">
                         <input asp-for="Movie.AgeRating" class="form-control" />
                         <span asp-validation-for="Movie.AgeRating" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Movie.Length"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Movie.Length" class="form-control" />
+                        <span asp-validation-for="Movie.Length" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -76,9 +85,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-4">
-                @* Keep this empty *@
             </div>
         </div>
     </div>

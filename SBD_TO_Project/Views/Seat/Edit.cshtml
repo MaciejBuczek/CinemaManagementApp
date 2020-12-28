@@ -1,0 +1,50 @@
+﻿@model SBD_TO_Project.Models.ViewModels.SeatVM
+
+<form method="post" asp-action="Edit">
+    <input asp-for="IdCinema" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Asign Seats
+            </h2>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <table class=" table table-bordered table-striped" style="width:100%">
+                    <tbody>
+                        @for (int i = 0; i < Model.Seats.Count; i++)
+                        {
+                            <tr>
+                                @for (int j = 0; j < Model.Seats[i].Count; j++)
+                                {
+                                    <td style="text-align:center">
+                                        @Html.HiddenFor(s => Model.Seats[i][j].Id)
+                                        @Html.HiddenFor(s => Model.Seats[i][j].RowNumber)
+                                        @Html.HiddenFor(s => Model.Seats[i][j].SeatNumber)
+                                        @Html.HiddenFor(s => Model.Seats[i][j].IdScreeningRoom)
+                                        @Html.CheckBoxFor(s => Model.Seats[i][j].IsValid)
+                                    </td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                        </div>
+                        <div class="col">
+                            <a asp-route-Id="@Model.IdCinema" asp-controller="ScreeningRoom" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                @* Keep this empty *@
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+﻿@model SBD_TO_Project.Models.ViewModels.CinemaBrowseVM
+
+<div class="container">
+    <div class="text-center">
+        <button class="btn btn-dark filter-button" data-filter="all">All</button>
+        @foreach (var obj in Model.Cities)
+        {
+            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Replace(' ','_')">@obj</button>
+        }
+    </div>
+    <br />
+    <div class="row">
+        @foreach (var cinema in Model.Cinemas)
+        {
+            <partial name="_IdividualCinemaCard" model="cinema" />
+        }
+    </div>
+</div>

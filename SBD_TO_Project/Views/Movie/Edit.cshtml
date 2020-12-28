@@ -39,6 +39,15 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
+                        <label asp-for="Movie.Length"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Movie.Length" class="form-control" />
+                        <span asp-validation-for="Movie.Length" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
                         <label asp-for="Movie.IdDirector"></label>
                     </div>
                     <div class="col-8">
