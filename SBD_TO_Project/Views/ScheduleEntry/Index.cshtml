@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SBD_TO_Project.Models.ScheduleEntry>
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Schedule Entry List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-route-id="@Model.First().IdSchedule"  asp-action="Create" class=" btn btn-primary">
+                <i class="fas fa-plus"></i>&nbsp; Add Entry
+            </a>
+            <a asp-route-id="@Model.First().Schedule.IdCinema" asp-controller="Schedule" asp-action="Index" class=" btn btn-info">Back</a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.First().Id != 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Start Time
+                    </th>
+                    <th>
+                        End Time
+                    </th>
+                    <th>
+                        Movie
+                    </th>
+                    <th>
+                        Room
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                <tr>
+                    <td>
+                        @obj.StartTime.ToString()
+                    </td>
+                    <td>
+                        @((obj.StartTime + obj.Movie.Length).ToString("hh\\:mm\\:ss"))
+                    </td>
+                    <td>
+                        @obj.Movie.Title
+                    </td>
+                    <td>
+                        @obj.ScreeningRoom.ScreeningRoomNumber
+                    </td>
+                    <td>
+                        @obj.Price
+                    </td>
+                    <td class="d-flex justify-content-center">
+                        <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:40%">
+                            <i class="fas fa-edit"></i>&nbsp; Edit
+                        </a>
+                        <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:40%">
+                            <i class="fas fa-trash-alt"></i>&nbsp; Delete
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No entry exists.</p>
+    }
+</div>
+

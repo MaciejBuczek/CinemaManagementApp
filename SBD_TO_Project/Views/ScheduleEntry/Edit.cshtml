@@ -1,0 +1,77 @@
+﻿@model SBD_TO_Project.Models.ViewModels.ScheduleEntryVM
+
+<form method="post">
+    <input asp-for="ScheduleEntry.Id" hidden />
+    <input asp-for="ScheduleEntry.IdSchedule" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Edit Schedule Entry
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ScheduleEntry.StartTime"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="ScheduleEntry.StartTime" class="form-control" />
+                        <span asp-validation-for="ScheduleEntry.StartTime" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ScheduleEntry.IdMovie"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="ScheduleEntry.IdMovie" asp-items="@Model.Movies" class="form-control">
+                            <option disabled selected>--Select Director--</option>
+                        </select>
+                        <span asp-validation-for="ScheduleEntry.IdMovie" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ScheduleEntry.IdScreeningRoom"></label>
+                    </div>
+                    <div class="col-8">
+                        <select asp-for="ScheduleEntry.IdScreeningRoom" asp-items="@Model.ScreeningRooms" class="form-control">
+                            <option disabled selected>--Select Studio--</option>
+                        </select>
+                        <span asp-validation-for="ScheduleEntry.IdScreeningRoom" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ScheduleEntry.Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="ScheduleEntry.Price" class="form-control" />
+                        <span asp-validation-for="ScheduleEntry.Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                        </div>
+                        <div class="col">
+                            <a asp-route-id="@Model.ScheduleEntry.IdSchedule" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 250
+            });
+        });
+    </script>
+}
