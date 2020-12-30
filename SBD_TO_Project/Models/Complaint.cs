@@ -17,9 +17,9 @@ namespace SBD_TO_Project.Models
         [Display(Name = "Complaint")]
         public string ComplaintContent { get; set; }
         
-        public int? IdCustomer { get; set; }
+        /*public int? IdCustomer { get; set; }
         [ForeignKey("IdCustomer")]
-        public virtual Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }*/
         
         public int? IdOrder { get; set; }
         [ForeignKey("IdOrder")]

@@ -8,5 +8,10 @@ namespace SBD_TO_Project
     public static class WebConstants
     {
         public static string ImageMoviePath = @"\images\movies\";
+
+        public static string AdminRole = "Admin";
+        public static string ManagerRole = "Manager";
+        public static string EmployeeRole = "Employee";
+        public static string CustomerRole = "Customer";
     }
 }

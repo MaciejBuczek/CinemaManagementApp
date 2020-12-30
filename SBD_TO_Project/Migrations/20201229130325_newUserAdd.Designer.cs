@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201229130325_newUserAdd")]
+    partial class newUserAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -168,10 +170,12 @@ namespace SBD_TO_Project.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -208,10 +212,12 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -684,39 +690,6 @@ namespace SBD_TO_Project.Migrations
                     b.ToTable("Director");
 
                     b.HasDiscriminator().HasValue("Director");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Customer", b =>
-                {
-                    b.HasBaseType("SBD_TO_Project.Models.User");
-
-                    b.Property<bool>("IsRegularCustomer")
-                        .HasColumnType("bit");
-
-                    b.HasDiscriminator().HasValue("Customer");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
-                {
-                    b.HasBaseType("SBD_TO_Project.Models.User");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("IdManager")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("MonthlySalary")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Position")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasDiscriminator().HasValue("Employee");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

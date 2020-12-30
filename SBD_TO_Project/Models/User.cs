@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,15 +9,13 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    [Table("User")]
-    public class User : Person
+    public class User : IdentityUser
     {
         [Required]
-        public string Login { get; set; }
+        [Display(Name = "First name")]
+        public string FirstName { get; set; }
         [Required]
-        public string Password { get; set; }
-        [Required]
-        public string Email { get; set; }
-        public short SecurityLevel { get; set; }
+        [Display(Name = "Last name")]
+        public string LastName { get; set; }
     }
 }

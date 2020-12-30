@@ -31,7 +31,8 @@ namespace SBD_TO_Project
                 Configuration.GetConnectionString("DefaultConnection")
             ));
 
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders().AddDefaultUI()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddControllersWithViews();
         }
