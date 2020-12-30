@@ -18,7 +18,7 @@ using SBD_TO_Project.Models;
 namespace SBD_TO_Project.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
-    public class RegisterManager : PageModel
+    public class RegisterEmployee : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -26,7 +26,7 @@ namespace SBD_TO_Project.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
-        public RegisterManager(
+        public RegisterEmployee(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
@@ -41,13 +41,13 @@ namespace SBD_TO_Project.Areas.Identity.Pages.Account
         }
 
         [BindProperty]
-        public InputManagerModel Input { get; set; }
+        public InputEmployeeModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class InputManagerModel
+        public class InputEmployeeModel
         {
             [Required]
             [EmailAddress]
@@ -117,13 +117,14 @@ namespace SBD_TO_Project.Areas.Identity.Pages.Account
                     PhoneNumber = Input.PhoneNumber,
                     Position = Input.Position,
                     MonthlySalary = Input.MonthlySalary,
-                    StartDate = Input.StartDate
+                    StartDate = Input.StartDate,
+                    IdManager = _userManager.GetUserId(User)
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, WebConstants.ManagerRole);
+                    await _userManager.AddToRoleAsync(user, WebConstants.EmployeeRole);
 
                     _logger.LogInformation("User created a new account with password.");
 
