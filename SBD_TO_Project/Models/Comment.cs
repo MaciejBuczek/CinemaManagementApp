@@ -16,9 +16,9 @@ namespace SBD_TO_Project.Models
         [Display(Name = "Comment")]
         public string CommentContent { get; set; }
         
-        public int? IdCustomer { get; set; }
+        /*public int? IdCustomer { get; set; }
         [ForeignKey("IdCustomer")]
-        public virtual Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }*/
         
         public int? IdMovie { get; set; }
         [ForeignKey("IdMovie")]

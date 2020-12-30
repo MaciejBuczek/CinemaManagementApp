@@ -15,16 +15,218 @@ namespace SBD_TO_Project.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(256)")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens");
+                });
 
             modelBuilder.Entity("SBD_TO_Project.Models.ActorMovie", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("IdActor")
                         .HasColumnType("int");
@@ -46,12 +248,16 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApartmentNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -69,28 +275,8 @@ namespace SBD_TO_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Address");
-                });
 
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<int?>("IdCinema")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdEmployee")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCinema");
-
-                    b.HasIndex("IdEmployee");
-
-                    b.ToTable("CinemaEmployee");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Address");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
@@ -98,7 +284,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -107,15 +293,10 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdCustomer")
-                        .HasColumnType("int");
-
                     b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("IdMovie");
 
@@ -127,14 +308,11 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ComplaintContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("IdCustomer")
-                        .HasColumnType("int");
 
                     b.Property<int?>("IdOrder")
                         .HasColumnType("int");
@@ -144,8 +322,6 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("IdOrder");
 
@@ -157,7 +333,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -173,7 +349,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("AgeRating")
                         .HasColumnType("int");
@@ -212,7 +388,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("IdGenre")
                         .HasColumnType("int");
@@ -234,7 +410,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -266,7 +442,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -282,7 +458,11 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -295,6 +475,8 @@ namespace SBD_TO_Project.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Person");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Reservation", b =>
@@ -302,13 +484,10 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("IdCustomer")
-                        .HasColumnType("int");
 
                     b.Property<int?>("IdScheduleEntry")
                         .HasColumnType("int");
@@ -317,8 +496,6 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("IdScheduleEntry");
 
@@ -332,7 +509,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -352,7 +529,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("IdMovie")
                         .HasColumnType("int");
@@ -385,7 +562,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("IdCinema")
                         .HasColumnType("int");
@@ -412,7 +589,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("IdScreeningRoom")
                         .HasColumnType("int");
@@ -433,6 +610,21 @@ namespace SBD_TO_Project.Migrations
                     b.ToTable("Seat");
                 });
 
+            modelBuilder.Entity("SBD_TO_Project.Models.User", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("User");
+                });
+
             modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
                 {
                     b.HasBaseType("SBD_TO_Project.Models.Address");
@@ -448,6 +640,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("datetime2");
 
                     b.ToTable("Cinema");
+
+                    b.HasDiscriminator().HasValue("Cinema");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.MovieStudio", b =>
@@ -459,9 +653,12 @@ namespace SBD_TO_Project.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnName("MovieStudio_Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("MovieStudio");
+
+                    b.HasDiscriminator().HasValue("MovieStudio");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>
@@ -472,6 +669,8 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Actor");
+
+                    b.HasDiscriminator().HasValue("Actor");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Director", b =>
@@ -479,31 +678,12 @@ namespace SBD_TO_Project.Migrations
                     b.HasBaseType("SBD_TO_Project.Models.Person");
 
                     b.Property<string>("Alias")
+                        .HasColumnName("Director_Alias")
                         .HasColumnType("nvarchar(max)");
 
                     b.ToTable("Director");
-                });
 
-            modelBuilder.Entity("SBD_TO_Project.Models.User", b =>
-                {
-                    b.HasBaseType("SBD_TO_Project.Models.Person");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<short>("SecurityLevel")
-                        .HasColumnType("smallint");
-
-                    b.ToTable("User");
+                    b.HasDiscriminator().HasValue("Director");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Customer", b =>
@@ -513,7 +693,7 @@ namespace SBD_TO_Project.Migrations
                     b.Property<bool>("IsRegularCustomer")
                         .HasColumnType("bit");
 
-                    b.ToTable("Customer");
+                    b.HasDiscriminator().HasValue("Customer");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
@@ -523,20 +703,71 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("IdManager")
-                        .HasColumnType("int");
+                    b.Property<string>("IdManager")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("MonthlySalary")
+                        .HasColumnType("float");
 
                     b.Property<string>("Position")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<float>("Salary")
-                        .HasColumnType("real");
-
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.ToTable("Employee");
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.ActorMovie", b =>
@@ -552,55 +783,20 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdMovie")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
-                        .WithMany("CinemaEmployees")
-                        .HasForeignKey("IdCinema");
-
-                    b.HasOne("SBD_TO_Project.Models.Employee", "Employee")
-                        .WithMany("CinemaEmployees")
-                        .HasForeignKey("IdEmployee");
-
-                    b.Navigation("Cinema");
-
-                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
                 {
-                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("IdCustomer");
-
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("IdMovie");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Complaint", b =>
                 {
-                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("IdCustomer");
-
                     b.HasOne("SBD_TO_Project.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("IdOrder");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Movie", b =>
@@ -612,10 +808,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasOne("SBD_TO_Project.Models.MovieStudio", "MovieStudio")
                         .WithMany()
                         .HasForeignKey("IdMovieStudio");
-
-                    b.Navigation("Director");
-
-                    b.Navigation("MovieStudio");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.MovieGenre", b =>
@@ -631,10 +823,6 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdMovie")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Genre");
-
-                    b.Navigation("Movie");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Order", b =>
@@ -650,18 +838,10 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdReservation")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Payment");
-
-                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Reservation", b =>
                 {
-                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("IdCustomer");
-
                     b.HasOne("SBD_TO_Project.Models.ScheduleEntry", "ScheduleEntry")
                         .WithMany()
                         .HasForeignKey("IdScheduleEntry");
@@ -669,12 +849,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasOne("SBD_TO_Project.Models.Seat", "Seat")
                         .WithMany()
                         .HasForeignKey("IdSeat");
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("ScheduleEntry");
-
-                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>
@@ -684,8 +858,6 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdCinema")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Cinema");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.ScheduleEntry", b =>
@@ -705,12 +877,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasOne("SBD_TO_Project.Models.ScreeningRoom", "ScreeningRoom")
                         .WithMany()
                         .HasForeignKey("IdScreeningRoom");
-
-                    b.Navigation("Movie");
-
-                    b.Navigation("Schedule");
-
-                    b.Navigation("ScreeningRoom");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.ScreeningRoom", b =>
@@ -718,8 +884,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
                         .WithMany()
                         .HasForeignKey("IdCinema");
-
-                    b.Navigation("Cinema");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Seat", b =>
@@ -729,108 +893,6 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdScreeningRoom")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ScreeningRoom");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Address", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.Cinema", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.MovieStudio", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Address", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.MovieStudio", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Person", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.Actor", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Director", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Person", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.Director", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.User", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Person", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.User", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Customer", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.Customer", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.User", null)
-                        .WithOne()
-                        .HasForeignKey("SBD_TO_Project.Models.Employee", "Id")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Genre", b =>
-                {
-                    b.Navigation("MovieGenres");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Movie", b =>
-                {
-                    b.Navigation("ActorMovies");
-
-                    b.Navigation("MovieGenres");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>
-                {
-                    b.Navigation("ScheduleEntries");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.ScreeningRoom", b =>
-                {
-                    b.Navigation("Seats");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Cinema", b =>
-                {
-                    b.Navigation("CinemaEmployees");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Actor", b =>
-                {
-                    b.Navigation("ActorMovies");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.Employee", b =>
-                {
-                    b.Navigation("CinemaEmployees");
                 });
 #pragma warning restore 612, 618
         }

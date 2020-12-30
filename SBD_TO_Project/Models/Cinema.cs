@@ -19,6 +19,6 @@ namespace SBD_TO_Project.Models
         [Required]
         [DataType(DataType.Time)]
         public DateTime CloseTime { get; set; }
-        public virtual ICollection<CinemaEmployee> CinemaEmployees { get; set; }
+        //public virtual ICollection<CinemaEmployee> CinemaEmployees { get; set; }
     }
 }

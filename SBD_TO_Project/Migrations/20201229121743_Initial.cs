@@ -11,13 +11,19 @@ namespace SBD_TO_Project.Migrations
                 name: "Address",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Town = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Street = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApartmentNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Country = table.Column<string>(nullable: false),
+                    PostalCode = table.Column<string>(nullable: false),
+                    Town = table.Column<string>(nullable: false),
+                    Street = table.Column<string>(nullable: true),
+                    ApartmentNumber = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    OpenTime = table.Column<DateTime>(nullable: true),
+                    CloseTime = table.Column<DateTime>(nullable: true),
+                    MovieStudio_Name = table.Column<string>(nullable: true),
+                    EstablishedDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,9 +34,9 @@ namespace SBD_TO_Project.Migrations
                 name: "Genre",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,9 +47,9 @@ namespace SBD_TO_Project.Migrations
                 name: "Payment",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Type = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,10 +60,23 @@ namespace SBD_TO_Project.Migrations
                 name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Alias = table.Column<string>(nullable: true),
+                    Director_Alias = table.Column<string>(nullable: true),
+                    Login = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    SecurityLevel = table.Column<short>(nullable: true),
+                    IsRegularCustomer = table.Column<bool>(nullable: true),
+                    Position = table.Column<string>(nullable: true),
+                    Salary = table.Column<float>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    IdManager = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,115 +84,21 @@ namespace SBD_TO_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cinema",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cinema", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Cinema_Address_Id",
-                        column: x => x.Id,
-                        principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MovieStudio",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EstablishedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MovieStudio", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_MovieStudio_Address_Id",
-                        column: x => x.Id,
-                        principalTable: "Address",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Actor",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Actor", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Actor_Person_Id",
-                        column: x => x.Id,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Director",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Alias = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Director", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Director_Person_Id",
-                        column: x => x.Id,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Login = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SecurityLevel = table.Column<short>(type: "smallint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_User_Person_Id",
-                        column: x => x.Id,
-                        principalTable: "Person",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Schedule",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdCinema = table.Column<int>(type: "int", nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    IdCinema = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedule", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Schedule_Cinema_IdCinema",
+                        name: "FK_Schedule_Address_IdCinema",
                         column: x => x.IdCinema,
-                        principalTable: "Cinema",
+                        principalTable: "Address",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -182,20 +107,46 @@ namespace SBD_TO_Project.Migrations
                 name: "ScreeningRoom",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ScreeningRoomNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfRows = table.Column<int>(type: "int", nullable: false),
-                    NumberOfSeatsPerRow = table.Column<int>(type: "int", nullable: false),
-                    IdCinema = table.Column<int>(type: "int", nullable: true)
+                    ScreeningRoomNumber = table.Column<string>(nullable: false),
+                    NumberOfRows = table.Column<int>(nullable: false),
+                    NumberOfSeatsPerRow = table.Column<int>(nullable: false),
+                    IdCinema = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ScreeningRoom", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ScreeningRoom_Cinema_IdCinema",
+                        name: "FK_ScreeningRoom_Address_IdCinema",
                         column: x => x.IdCinema,
-                        principalTable: "Cinema",
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CinemaEmployee",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdCinema = table.Column<int>(nullable: true),
+                    IdEmployee = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CinemaEmployee", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CinemaEmployee_Address_IdCinema",
+                        column: x => x.IdCinema,
+                        principalTable: "Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CinemaEmployee_Person_IdEmployee",
+                        column: x => x.IdEmployee,
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -204,69 +155,29 @@ namespace SBD_TO_Project.Migrations
                 name: "Movie",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AgeRating = table.Column<int>(type: "int", nullable: true),
-                    Length = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdDirector = table.Column<int>(type: "int", nullable: true),
-                    IdMovieStudio = table.Column<int>(type: "int", nullable: true)
+                    Title = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    AgeRating = table.Column<int>(nullable: true),
+                    Length = table.Column<TimeSpan>(nullable: false),
+                    Image = table.Column<string>(nullable: true),
+                    IdDirector = table.Column<int>(nullable: true),
+                    IdMovieStudio = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Movie", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Movie_Director_IdDirector",
+                        name: "FK_Movie_Person_IdDirector",
                         column: x => x.IdDirector,
-                        principalTable: "Director",
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Movie_MovieStudio_IdMovieStudio",
+                        name: "FK_Movie_Address_IdMovieStudio",
                         column: x => x.IdMovieStudio,
-                        principalTable: "MovieStudio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Customer",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    IsRegularCustomer = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Customer", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Customer_User_Id",
-                        column: x => x.Id,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Employee",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Salary = table.Column<float>(type: "real", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IdManager = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Employee", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Employee_User_Id",
-                        column: x => x.Id,
-                        principalTable: "User",
+                        principalTable: "Address",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -275,12 +186,12 @@ namespace SBD_TO_Project.Migrations
                 name: "Seat",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SeatNumber = table.Column<int>(type: "int", nullable: false),
-                    RowNumber = table.Column<int>(type: "int", nullable: false),
-                    IsValid = table.Column<bool>(type: "bit", nullable: false),
-                    IdScreeningRoom = table.Column<int>(type: "int", nullable: false)
+                    SeatNumber = table.Column<int>(nullable: false),
+                    RowNumber = table.Column<int>(nullable: false),
+                    IsValid = table.Column<bool>(nullable: false),
+                    IdScreeningRoom = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -297,18 +208,18 @@ namespace SBD_TO_Project.Migrations
                 name: "ActorMovie",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdActor = table.Column<int>(type: "int", nullable: false),
-                    IdMovie = table.Column<int>(type: "int", nullable: false)
+                    IdActor = table.Column<int>(nullable: false),
+                    IdMovie = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ActorMovie", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ActorMovie_Actor_IdActor",
+                        name: "FK_ActorMovie_Person_IdActor",
                         column: x => x.IdActor,
-                        principalTable: "Actor",
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -320,13 +231,41 @@ namespace SBD_TO_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    CommentContent = table.Column<string>(nullable: false),
+                    IdCustomer = table.Column<int>(nullable: true),
+                    IdMovie = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_Person_IdCustomer",
+                        column: x => x.IdCustomer,
+                        principalTable: "Person",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Comment_Movie_IdMovie",
+                        column: x => x.IdMovie,
+                        principalTable: "Movie",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MovieGenre",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdMovie = table.Column<int>(type: "int", nullable: false),
-                    IdGenre = table.Column<int>(type: "int", nullable: false)
+                    IdMovie = table.Column<int>(nullable: false),
+                    IdGenre = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -349,13 +288,13 @@ namespace SBD_TO_Project.Migrations
                 name: "ScheduleEntry",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    IdMovie = table.Column<int>(type: "int", nullable: false),
-                    IdSchedule = table.Column<int>(type: "int", nullable: false),
-                    IdScreeningRoom = table.Column<int>(type: "int", nullable: true)
+                    StartTime = table.Column<TimeSpan>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    IdMovie = table.Column<int>(nullable: false),
+                    IdSchedule = table.Column<int>(nullable: false),
+                    IdScreeningRoom = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -381,77 +320,23 @@ namespace SBD_TO_Project.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comment",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CommentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdCustomer = table.Column<int>(type: "int", nullable: true),
-                    IdMovie = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comment_Customer_IdCustomer",
-                        column: x => x.IdCustomer,
-                        principalTable: "Customer",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comment_Movie_IdMovie",
-                        column: x => x.IdMovie,
-                        principalTable: "Movie",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CinemaEmployee",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    IdCinema = table.Column<int>(type: "int", nullable: true),
-                    IdEmployee = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CinemaEmployee", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CinemaEmployee_Cinema_IdCinema",
-                        column: x => x.IdCinema,
-                        principalTable: "Cinema",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CinemaEmployee_Employee_IdEmployee",
-                        column: x => x.IdEmployee,
-                        principalTable: "Employee",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservation",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IdCustomer = table.Column<int>(type: "int", nullable: true),
-                    IdSeat = table.Column<int>(type: "int", nullable: true),
-                    IdScheduleEntry = table.Column<int>(type: "int", nullable: true)
+                    Date = table.Column<DateTime>(nullable: false),
+                    IdCustomer = table.Column<int>(nullable: true),
+                    IdSeat = table.Column<int>(nullable: true),
+                    IdScheduleEntry = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Reservation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservation_Customer_IdCustomer",
+                        name: "FK_Reservation_Person_IdCustomer",
                         column: x => x.IdCustomer,
-                        principalTable: "Customer",
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -472,13 +357,13 @@ namespace SBD_TO_Project.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<float>(type: "real", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdReservation = table.Column<int>(type: "int", nullable: false),
-                    IdPayment = table.Column<int>(type: "int", nullable: false)
+                    Date = table.Column<DateTime>(nullable: false),
+                    Price = table.Column<float>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
+                    IdReservation = table.Column<int>(nullable: false),
+                    IdPayment = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -501,20 +386,20 @@ namespace SBD_TO_Project.Migrations
                 name: "Complaint",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ComplaintContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdCustomer = table.Column<int>(type: "int", nullable: true),
-                    IdOrder = table.Column<int>(type: "int", nullable: true)
+                    Topic = table.Column<string>(nullable: false),
+                    ComplaintContent = table.Column<string>(nullable: false),
+                    IdCustomer = table.Column<int>(nullable: true),
+                    IdOrder = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Complaint", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Complaint_Customer_IdCustomer",
+                        name: "FK_Complaint_Person_IdCustomer",
                         column: x => x.IdCustomer,
-                        principalTable: "Customer",
+                        principalTable: "Person",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -659,12 +544,6 @@ namespace SBD_TO_Project.Migrations
                 name: "MovieGenre");
 
             migrationBuilder.DropTable(
-                name: "Actor");
-
-            migrationBuilder.DropTable(
-                name: "Employee");
-
-            migrationBuilder.DropTable(
                 name: "Order");
 
             migrationBuilder.DropTable(
@@ -677,16 +556,10 @@ namespace SBD_TO_Project.Migrations
                 name: "Reservation");
 
             migrationBuilder.DropTable(
-                name: "Customer");
-
-            migrationBuilder.DropTable(
                 name: "ScheduleEntry");
 
             migrationBuilder.DropTable(
                 name: "Seat");
-
-            migrationBuilder.DropTable(
-                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Movie");
@@ -696,15 +569,6 @@ namespace SBD_TO_Project.Migrations
 
             migrationBuilder.DropTable(
                 name: "ScreeningRoom");
-
-            migrationBuilder.DropTable(
-                name: "Director");
-
-            migrationBuilder.DropTable(
-                name: "MovieStudio");
-
-            migrationBuilder.DropTable(
-                name: "Cinema");
 
             migrationBuilder.DropTable(
                 name: "Person");

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -19,7 +20,7 @@ namespace SBD_TO_Project.Data
 
         public DbSet<MovieGenre> MovieGenre { get; set; }           //ok
         public DbSet<ActorMovie> ActorMovie { get; set; }           //ok
-        public DbSet<CinemaEmployee> CinemaEmployee { get; set; }     //ok
+        //public DbSet<CinemaEmployee> CinemaEmployee { get; set; }     //ok
 
         public DbSet<Schedule> Schedule { get; set; }               //ok
         public DbSet<Seat> Seat { get; set; }                       //ok

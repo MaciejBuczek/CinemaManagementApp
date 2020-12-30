@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models
 {
-    [Table("Customer")]
     public class Customer : User
     {
         public bool IsRegularCustomer { get; set; }
