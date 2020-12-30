@@ -1,0 +1,124 @@
+﻿@model SBD_TO_Project.Models.Movie
+
+@{ 
+    var movieStudioOutput = "<span>";
+    var directorOutput = "<span>";
+
+    if(Model.MovieStudio != null)
+    {
+        movieStudioOutput += Model.MovieStudio.Name;
+        movieStudioOutput += " established on ";
+        movieStudioOutput += Model.MovieStudio.EstablishedDate.ToShortDateString();
+        movieStudioOutput += "<br />";
+        if (Model.MovieStudio.Street != null)
+            movieStudioOutput += Model.MovieStudio.Street + " ";
+        if(Model.MovieStudio.ApartmentNumber != null)
+            movieStudioOutput += Model.MovieStudio.ApartmentNumber + "<br />";
+        movieStudioOutput += Model.MovieStudio.PostalCode + " ";
+        movieStudioOutput += Model.MovieStudio.Town + "<br />";
+        movieStudioOutput += Model.MovieStudio.Country;
+    }
+
+    directorOutput += Model.Director.FirstName + " ";
+    if (Model.Director.Alias != null)
+        directorOutput += "\"" + Model.Director.Alias + "\" ";
+    directorOutput += Model.Director.LastName;
+
+    movieStudioOutput += "</span>";
+    directorOutput += "</span>";
+}
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <div>
+                <h2 class="text-primary text-left">@Model.Title</h2>
+            </div>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="Index" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="col-8 text-left">
+            @Html.Raw(@Model.Description)
+        </div>
+        <div class="col-4 text-right">
+            <img class="img-fluid d-block mx-auto mb-3 float-left" src="@(WebConstants.ImageMoviePath+Model.Image)" alt="Card image cap">
+        </div>
+    </div>
+    <div class="row pt-4">
+        <div class="row col-8 text-left">
+            @foreach (var genre in Model.MovieGenres)
+            {
+                <div class="col-6">
+                    <span class="badge p-3 border w-100" style="background-color:aliceblue">@genre.Genre.Name</span>
+
+                </div>
+                    
+            }
+        </div>
+        <div class="col-4 text-left w-100 ml-4">
+            <div>
+                <span class="font-italic">Director:</span>
+                <a href="#" onclick="showDirector('@directorOutput')">
+                    @Model.Director.FirstName @Model.Director.LastName
+                </a>
+            </div>
+            <div>
+                <span class="font-italic">Movie Studio:</span>
+                @if(Model.MovieStudio != null)
+                {
+                    <a href="#" onclick="showMovieStudio('@movieStudioOutput')">@Model.MovieStudio.Name</a>
+                }
+                else
+                {
+                    <span>None</span>
+                }
+            </div>
+            <div>
+                <span class="font-italic">Movie Actors</span>
+                <ul>
+                    @foreach(var actor in Model.ActorMovies)
+                    {
+                        <li>@actor.Actor.FirstName @actor.Actor.LastName</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        function showDirector(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Director</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+    <script>
+        function showMovieStudio(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Studio</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+}

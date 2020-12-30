@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
+using SBD_TO_Project.Models;
 using SBD_TO_Project.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,14 @@ namespace SBD_TO_Project.Controllers
                 Genres = _db.Genre
             };
             return View(movieBrowseVM);
+        }
+
+        public IActionResult Details(int Id)
+        {
+            Movie movie = _db.Movie.Where(m => m.Id == Id).Include(mg => mg.MovieGenres).ThenInclude(g => g.Genre).Include(am => am.ActorMovies).ThenInclude(a => a.Actor)
+                .Include(d => d.Director).Include(ms => ms.MovieStudio).FirstOrDefault();
+
+            return View(movie);
         }
     }
 }
