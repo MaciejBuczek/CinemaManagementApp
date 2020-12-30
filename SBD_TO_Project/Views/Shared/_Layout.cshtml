@@ -50,6 +50,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="CinemaBrowse" asp-action="Index">Browse Cinemas</a>
                         </li>
+                        @if (User.IsInRole(WebConstants.AdminRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterManager">Create Manager Account</a>
+                            </li>
+                        }
+                        @if (User.IsInRole(WebConstants.ManagerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterEmployee">Create Employee Account</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
