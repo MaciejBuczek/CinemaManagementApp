@@ -19,10 +19,24 @@
         <div class="row">
             <div class="col-8 offset-2">
                 <table class=" table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            @for(int i = 1; i < Model.Seats.Count; i++)
+                            {
+                                <th style="text-align:center">
+                                    S @i
+                                </th>
+                            }
+                        </tr>
+                    </thead>
                     <tbody>
                         @for (int i = 0; i < Model.Seats.Count; i++)
                         {
                             <tr>
+                                <th>
+                                    R @(i+1)
+                                </th>
                                 @for (int j = 0; j < Model.Seats[i].Count; j++)
                                 {
                                     <td style="text-align:center">

@@ -32,6 +32,9 @@
                         Number Of Seats Per Row
                     </th>
                     <th>
+                        Seats
+                    </th>
+                    <th>
                         Manage Screening Room
                     </th>
                 </tr>
@@ -49,7 +52,7 @@
                         <td>
                             @obj.NumberOfSeatsPerRow
                         </td>
-                        <td class="d-flex justify-content-center">
+                        <td>
                             @if (obj.Seats.Count > 0)
                             {
                                 <a asp-route-Id="@obj.Id" asp-action="Show" class="btn btn-secondary m-0 mr-4" style="width:100%">
@@ -62,6 +65,8 @@
                                     <i class="fas fa-plus-circle"></i>&nbsp; Add
                                 </a>
                             }
+                        </td>
+                        <td class="d-flex justify-content-center">
                             <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:100%">
                                 <i class="fas fa-edit"></i>&nbsp; Edit
                             </a>
