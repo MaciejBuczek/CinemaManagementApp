@@ -12,11 +12,11 @@ namespace SBD_TO_Project.Models
         [Key]
         public int Id { get; set; }
         
-        public int? IdCinema { get; set; }
+        public int IdCinema { get; set; }
         [ForeignKey("IdCinema")]
         public virtual Cinema Cinema { get; set; }
         
-        public int? IdEmployee { get; set; }
+        public string IdEmployee { get; set; }
         [ForeignKey("IdEmployee")]
         public virtual Employee Employee { get; set; }
     }

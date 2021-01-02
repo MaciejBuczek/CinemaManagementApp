@@ -1,0 +1,104 @@
+﻿@model SBD_TO_Project.Models.Employee
+
+<form method="post">
+    <div class="border p-3">
+        <input asp-for="Id" hidden />
+        <input asp-for="EmailConfirmed" hidden />
+        <input asp-for="PasswordHash" hidden />
+        <input asp-for="SecurityStamp" hidden />
+        <input asp-for="ConcurrencyStamp" hidden />
+        <input asp-for="PhoneNumberConfirmed" hidden />
+        <input asp-for="TwoFactorEnabled" hidden />
+        <input asp-for="LockoutEnd" hidden />
+        <input asp-for="LockoutEnabled" hidden />
+        <input asp-for="AccessFailedCount" hidden />
+        <input asp-for="EndDate" hidden />
+        <input asp-for="IdManager" hidden />
+
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Edit Employee Account
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="FirstName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="LastName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Email"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="PhoneNumber"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Position"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Position" class="form-control" />
+                        <span asp-validation-for="Position" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="MonthlySalary"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="MonthlySalary" class="form-control" />
+                        <span asp-validation-for="MonthlySalary" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="StartDate"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Update" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+

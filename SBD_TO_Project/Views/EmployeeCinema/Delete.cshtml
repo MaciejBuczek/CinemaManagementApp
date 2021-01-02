@@ -1,0 +1,88 @@
+﻿@model SBD_TO_Project.Models.CinemaEmployee
+
+<form method="post" asp-action="DeleteConfirm">
+    <input asp-for="Id" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Delete Genre
+            </h2>
+
+        </div>
+        <div class="form-group row">
+            <h4 class="text-danger pl-3">
+                Are you sure you want to remove the following employee from @Model.Cinema.Name
+            </h4>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.FirstName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.FirstName" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.LastName"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.LastName" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.Email"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.Email" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.PhoneNumber"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.PhoneNumber" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.Position"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.Position" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.MonthlySalary"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.MonthlySalary" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Employee.StartDate"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Employee.StartDate" class="form-control" disabled />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-danger w-100" value="Remove" />
+                        </div>
+                        <div class="col">
+                            <a asp-route-Id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
