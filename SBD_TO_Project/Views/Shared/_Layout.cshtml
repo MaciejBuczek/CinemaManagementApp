@@ -26,23 +26,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="Index">Genre</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Movie" asp-action="Index">Movie</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actor</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Director" asp-action="Index">Director</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MovieStudio" asp-action="Index">Movie Studio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cinema" asp-action="Index">Cinema</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Manage
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Cinema" asp-action="Index">Cinemas</a>
+                                <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Movie" asp-action="Index">Movies</a>
+                                @if (User.IsInRole(WebConstants.ManagerRole))
+                                {
+                                    <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Employee" asp-action="Index">Employees</a>
+                                }
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="Index">Genres</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actors</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Director" asp-action="Index">Directors</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MovieStudio" asp-action="Index">Movie Studios</a>
+                            </div>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MovieBrowse" asp-action="Index">Browse Movies</a>
@@ -54,12 +53,6 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterManager">Create Manager Account</a>
-                            </li>
-                        }
-                        @if (User.IsInRole(WebConstants.ManagerRole))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/RegisterEmployee">Create Employee Account</a>
                             </li>
                         }
                     </ul>

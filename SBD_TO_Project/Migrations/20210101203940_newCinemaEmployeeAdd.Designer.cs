@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210101203940_newCinemaEmployeeAdd")]
+    partial class newCinemaEmployeeAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -315,18 +317,10 @@ namespace SBD_TO_Project.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("IdCustomer")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int?>("IdMovie")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("IdMovie");
 
@@ -830,10 +824,6 @@ namespace SBD_TO_Project.Migrations
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
                 {
-                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("IdCustomer");
-
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
                         .WithMany()
                         .HasForeignKey("IdMovie");

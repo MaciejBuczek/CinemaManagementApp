@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
+using SBD_TO_Project.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace SBD_TO_Project.Controllers
         }
 
         //Create Get
-        public IActionResult Create()
+        public IActionResult Create(int id)
         {
             return View();
         }
