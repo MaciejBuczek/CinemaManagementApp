@@ -15,10 +15,11 @@ namespace SBD_TO_Project.Models
         [Required]
         [Display(Name = "Comment")]
         public string CommentContent { get; set; }
+        public bool IsConfirmed { get; set; }
         
-        /*public int? IdCustomer { get; set; }
+        public string IdCustomer { get; set; }
         [ForeignKey("IdCustomer")]
-        public virtual Customer Customer { get; set; }*/
+        public virtual Customer Customer { get; set; }
         
         public int? IdMovie { get; set; }
         [ForeignKey("IdMovie")]
