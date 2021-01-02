@@ -1,0 +1,107 @@
+﻿@model IEnumerable<SBD_TO_Project.Models.Comment>
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Unapproved Comments List</h2>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Customer name
+                    </th>
+                    <th>
+                        Movie name
+                    </th>
+                    <th>
+                        Comment content
+                    </th>
+                    <th>
+                        Approval
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr class="border-bottom">
+                        <td>
+                            @obj.Customer.Email
+                        </td>
+                        <td style="width:15%">
+                            @if (obj.Movie.Title.Length > 20)
+                            {
+                                <a href="#" onclick="showTitle('<h1>@obj.Movie.Title<h1>')">@obj.Movie.Title.Substring(0, 17) ...</a>
+                            }
+                            else
+                            {
+                                @obj.Movie.Title
+                            }
+                        </td>
+                        <td>
+                            @if (obj.CommentContent.Length > 50)
+                            {
+                            <div class="text-center">
+                                <a href="#" class="btn btn-info" onclick="showCommentContent('<h1>@obj.CommentContent<h1>')"> Click to show comment </a>
+                            </div>
+                            }
+                            else
+                            {
+                                @Html.Raw(obj.CommentContent)
+                            }
+                        </td>
+                        <td class="d-flex justify-content-center border-0">
+                            <a asp-route-Id="@obj.Id" asp-action="Accept" class="btn btn-success m-0 mr-2" style="width:100%">
+                                <i class="fas fa-thumbs-up"></i>
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger" style="width:100%">
+                                <i class="fas fa-thumbs-down"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No unapproved comments exist.</p>
+    }
+</div>
+@section Scripts{
+    <script>
+        function showTitle(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Title</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+        function showCommentContent(htmlContent) {
+            Swal.fire({
+                title: '<strong>Comment Content</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+}
