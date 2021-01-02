@@ -20,6 +20,9 @@
                         Name
                     </th>
                     <th>
+                        Open Hours
+                    </th>
+                    <th>
                         Country
                     </th>
                     <th>
@@ -43,6 +46,9 @@
                 <tr>
                     <td>
                         @Model.Name
+                    </td>
+                    <td>
+                        @(Model.OpenTime.ToString("h:mm tt")+" - "+Model.CloseTime.ToString("h:mm tt"))
                     </td>
                     <td>
                         @Model.Country

@@ -1,19 +1,25 @@
 ﻿@model SBD_TO_Project.Models.Cinema
 
-<div class="col-lg-6 col-md-6 pb-4 filter @Model.Town">
+<div class="col-lg-4 col-md-3 pb-4 filter @Model.Town.Replace(' ','_')">
     <div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
         <div class="card-body px-3 pt-3 pb-1 row">
             <div class="col-6">
-                <div class="row text-info h3 pl-2 h-25"> @Model.Name </div>
-                <div class="row text-info h4 pl-2">@Model.Town</div>
+                <div class="row text-primary h3 pl-2 h-25 font-weight-bold"> @Model.Name </div>
+                <div class="row text-info h4 pl-2">
+                    <span class="badge p-2 border" style="background-color:aliceblue">@Model.Town</span>                    
+                </div>
                 <div class="row text-body h5 pl-2"> @(Model.Street +" "+Model.ApartmentNumber)</div>
                 <div class="row text-body h6 pl-2"> @Model.PostalCode </div>
                 <div class="row text-body h6 pl-2"> @Model.Country </div>
             </div>
+            <div class="col-6 pt-2">
+                <div class="row text-info h5">Open Hours:</div>
+                <div class="row h5">@(Model.OpenTime.ToString("H:mm") +" - "+Model.CloseTime.ToString("H:mm"))</div>
+            </div>
         </div>
         <div class="card-body p-1 px-3 row">
             <div class="col-12 p-1">
-                <a class="btn btn-primary form-control btn-sm p-2" style="height:40px">Check Cinema Schedules</a>
+                <a href ="#" class="btn btn-primary form-control btn-sm p-2 text-white" style="height:40px">Check Cinema Schedules</a>
             </div>
         </div>
     </div>

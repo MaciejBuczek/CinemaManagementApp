@@ -7,7 +7,7 @@ namespace SBD_TO_Project.Models.ViewModels
 {
     public class CinemaBrowseVM
     {
-        public IEnumerable<Cinema> Cinemas { get; set; }
-        public IEnumerable<string> Cities { get; set; }
+        public List<Cinema> Cinemas { get; set; }
+        public List<string> Cities { get; set; }
     }
 }

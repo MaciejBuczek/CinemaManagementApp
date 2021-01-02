@@ -51,7 +51,7 @@
     <div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
         <div class="card-body px-3 pt-3 pb-1 row">
             <div class="col-6">
-                <div class="row text-info h3 pl-2 h-25"> @Model.Title </div>
+                <div class="row text-primary h3 pl-2 h-25 font-weight-bold"> @Model.Title </div>
                 <div class="row h4 pl-2">
                     <span class="text-body">Age rating</span>
                     @if (Model.AgeRating != null)
@@ -68,7 +68,15 @@
                 {
                     directorAlias = "(" + Model.Director.Alias + ")";
                 }
-                <div class="row text-info h6 pl-2"> @(Model.Director.FirstName+" "+Model.Director.LastName + directorAlias)</div>
+                <div class="row text-info h6 pl-2"> @(Model.Director.FirstName+" "+Model.Director.LastName)</div>
+                @if (directorAlias != "")
+                {
+                    <div class="row text-info h6 pl-2">@directorAlias</div>
+                }
+                else
+                {
+                    <br />
+                }
                 <div class="row text-body h6 pl-2"> Movie Studio: </div>
                 <div class="row text-info h6 pl-2 pb-3">
                     @if (Model.MovieStudio != null)
@@ -91,7 +99,7 @@
                 <img class="img-fluid d-block mx-auto mb-3 float-left" src="@(WebConstants.ImageMoviePath+Model.Image)" alt="Card image cap">
             </div>
         </div>
-        <div class="row p-1 px-3" style="height:10vh">
+        <div class="row p-1 px-3 mt-4" style="height:10vh">
             @if (Model.MovieGenres.Count == 0)
             {
                 <span class="pl-3">No genres assigned</span>
@@ -117,7 +125,7 @@
                 <a asp-route-Id="@Model.Id" asp-action="Details" class="btn btn-info form-control btn-sm p-2" style="height:40px">View Details</a>
             </div>
             <div class="col-12 p-1">
-                <a class="btn btn-primary form-control btn-sm p-2" style="height:40px">Check In Cinema</a>
+                <a asp-route-Id="@Model.Id" asp-controller="CinemaBrowse" asp-action="CheckInCinema" class="btn btn-primary form-control btn-sm p-2 text-white" style="height:40px">Check In Cinema</a>
             </div>
         </div>
     </div>
