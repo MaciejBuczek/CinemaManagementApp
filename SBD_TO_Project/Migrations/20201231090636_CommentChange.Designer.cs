@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201231090636_CommentChange")]
+    partial class CommentChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -277,28 +279,6 @@ namespace SBD_TO_Project.Migrations
                     b.ToTable("Address");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Address");
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IdCinema")
-                        .HasColumnType("int");
-
-                    b.Property<string>("IdEmployee")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdCinema");
-
-                    b.HasIndex("IdEmployee");
-
-                    b.ToTable("CinemaEmployee");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>
@@ -813,19 +793,6 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdMovie")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("SBD_TO_Project.Models.CinemaEmployee", b =>
-                {
-                    b.HasOne("SBD_TO_Project.Models.Cinema", "Cinema")
-                        .WithMany()
-                        .HasForeignKey("IdCinema")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SBD_TO_Project.Models.Employee", "Employee")
-                        .WithMany()
-                        .HasForeignKey("IdEmployee");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Comment", b =>

@@ -22,6 +22,7 @@ namespace SBD_TO_Project.Models
         public TimeSpan Length { get; set; }
 
         public string Image { get; set; }
+        
 
         [Display(Name = "Director")]
         public int? IdDirector { get; set; }
@@ -36,5 +37,7 @@ namespace SBD_TO_Project.Models
         public virtual ICollection<MovieGenre> MovieGenres { get; set; }
 
         public virtual ICollection<ActorMovie> ActorMovies { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
