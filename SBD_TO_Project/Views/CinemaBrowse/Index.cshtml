@@ -10,9 +10,36 @@
     </div>
     <br />
     <div class="row">
-        @foreach (var cinema in Model.Cinemas)
+        @if (Model.Cinemas.Count > 0)
         {
-            <partial name="_IdividualCinemaCard" model="cinema" />
+            @foreach (var cinema in Model.Cinemas)
+            {
+                <partial name="_IndividualCinemaCard" model="cinema" />
+            }
+        }
+        else
+        {
+            <h1>Sorry but the movie your are looking for is not currently avilable in any cinema.</h1>
         }
     </div>
 </div>
+
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+
+            $(".filter-button").click(function () {
+
+                var value = $(this).attr('data-filter');
+                if (value == "all") {
+                    $('.filter').show('1000');
+                }
+                else {
+                    $(".filter").not('.' + value).hide('3000');
+                    $('.filter').filter('.' + value).show('3000');
+
+                }
+            });
+        });
+    </script>
+}

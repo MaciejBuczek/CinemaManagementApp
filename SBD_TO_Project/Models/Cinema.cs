@@ -15,9 +15,11 @@ namespace SBD_TO_Project.Models
 
         [Required]
         [DataType(DataType.Time)]
+        [Display(Name="Opened at")]
         public DateTime OpenTime { get; set; }
         [Required]
         [DataType(DataType.Time)]
+        [Display(Name = "Closed at")]
         public DateTime CloseTime { get; set; }
         //public virtual ICollection<CinemaEmployee> CinemaEmployees { get; set; }
     }
