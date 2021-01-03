@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SBD_TO_Project.Data;
 
 namespace SBD_TO_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210102211605_newReservationUpdate")]
+    partial class newReservationUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -448,6 +450,9 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("IdPayment")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdReservation")
+                        .HasColumnType("int");
+
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -458,6 +463,8 @@ namespace SBD_TO_Project.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdPayment");
+
+                    b.HasIndex("IdReservation");
 
                     b.ToTable("Order");
                 });
@@ -511,11 +518,11 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("IdCustomer")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("IdOrder")
-                        .HasColumnType("int");
 
                     b.Property<int>("IdScheduleEntry")
                         .HasColumnType("int");
@@ -526,8 +533,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdCustomer");
-
-                    b.HasIndex("IdOrder");
 
                     b.HasIndex("IdScheduleEntry");
 
@@ -881,6 +886,12 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdPayment")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SBD_TO_Project.Models.Reservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("IdReservation")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Reservation", b =>
@@ -888,12 +899,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
                         .WithMany()
                         .HasForeignKey("IdCustomer");
-
-                    b.HasOne("SBD_TO_Project.Models.Order", "Order")
-                        .WithMany("ScheduleEntries")
-                        .HasForeignKey("IdOrder")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.ScheduleEntry", "ScheduleEntry")
                         .WithMany()

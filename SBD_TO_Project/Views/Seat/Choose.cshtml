@@ -1,0 +1,94 @@
+﻿@model SBD_TO_Project.Models.ViewModels.ChooseSeatVM
+
+@{ 
+    var style ="";
+    var isFree = true;
+}
+
+<form method="post" asp-controller="Reservation" asp-action="Create">
+    <input asp-for="ScheduleEntryId" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Please select seats that you would like to reserve
+            </h2>
+        </div>
+        <div class="form-group row">
+            <h5 class="text-dark pl-3">
+                Seats that are not avilable have 
+                <span class="text-secondary font-weight-bold">gray color</span>
+            </h5>
+        </div>
+        <div class="form-group row">
+            <h5 class="text-dark pl-3">
+                Seats that are already reserved have 
+                <span class="text-danger font-weight-bold">red color</span>
+            </h5>
+        </div> 
+        <br>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <table class=" table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            @for (int i = 1; i <= Model.SeatCheckBoxList.Count; i++)
+                            {
+                                <th style="text-align:center">
+                                    S @i
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.SeatCheckBoxList.Count; i++)
+                        {
+                            <tr>
+                                <th>
+                                    R @(i+1)
+                                </th>
+                                @for (int j = 0; j < Model.SeatCheckBoxList[i].Count; j++)
+                                {
+                                    @if (!((Seat)Model.SeatCheckBoxList[i][j].Object).IsValid)
+                                    {
+                                        style = "bg-secondary";
+                                        isFree = false;
+                                    }
+                                    else if (Model.SeatCheckBoxList[i][j].IsChecked)
+                                    {
+                                        style = "bg-danger";
+                                        isFree = false;
+                                        Model.SeatCheckBoxList[i][j].IsChecked = false;
+                                    }
+                                    else
+                                    {
+                                        style = "";
+                                        isFree = true;
+                                    }
+                                    <td class="@style" style="text-align:center">
+                                        @Html.HiddenFor(s => Model.SeatCheckBoxList[i][j].Id)
+                                        @if (isFree)
+                                        {
+                                            @Html.CheckBoxFor(s => Model.SeatCheckBoxList[i][j].IsChecked)
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Reserve seats" />
+                        </div>
+                        <div class="col">
+                            <a asp-controller="CinemaBrowse" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

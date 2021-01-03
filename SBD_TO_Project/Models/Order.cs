@@ -16,12 +16,10 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Status { get; set; }
         
-        public int IdReservation { get; set; }
-        [ForeignKey("IdReservation")]
-        public virtual Reservation Reservation { get; set; }
-        
         public int IdPayment { get; set; }
         [ForeignKey("IdPayment")]
         public virtual Payment Payment { get; set; }
+
+        public virtual ICollection<Reservation> ScheduleEntries { get; set; }
     }
 }

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models.ViewModels
 {
-    public class SeatVM
+    public class ChooseSeatCheckBox
     {
-        public int IdCinema { get; set; }
-
-        public List<List<Seat>> Seats { get; set; }
+        public Seat Seat { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

@@ -71,6 +71,7 @@ namespace SBD_TO_Project.Controllers
         public IActionResult Edit(int Id)
         {
             var obj = _db.ScreeningRoom.Find(Id);
+
             if (obj == null)
                 return NotFound();
 
@@ -85,11 +86,48 @@ namespace SBD_TO_Project.Controllers
                     tempList.Add(seats[j + i * obj.NumberOfSeatsPerRow]);
                 }
                 listOfSeats.Add(tempList);
-            }
+            }  
 
             SeatVM seatVM = new SeatVM() { IdCinema = (int)obj.IdCinema, Seats = listOfSeats };
 
             return View(seatVM);
+        }
+
+        public IActionResult Choose(int id)
+        {
+            var scheduleEntry = _db.ScheduleEntry.Where(se => se.Id == id).Include(sr => sr.ScreeningRoom).FirstOrDefault();
+
+            if (scheduleEntry == null)
+                return NotFound();
+
+            List<Seat> seats = _db.Seat.Where(s => s.IdScreeningRoom == scheduleEntry.ScreeningRoom.Id).ToList();
+            List<List<CheckBoxItem>> seatCheckBoxList = new List<List<CheckBoxItem>>();
+
+            for (int i = 0; i < scheduleEntry.ScreeningRoom.NumberOfRows; i++)
+            {
+                List<CheckBoxItem> tempList = new List<CheckBoxItem>();
+                for (int j = 0; j < scheduleEntry.ScreeningRoom.NumberOfSeatsPerRow; j++)
+                {
+                    CheckBoxItem seatCheckBox = new CheckBoxItem()
+                    {
+                        Id = seats[j + i * scheduleEntry.ScreeningRoom.NumberOfSeatsPerRow].Id,
+                        Object = seats[j + i * scheduleEntry.ScreeningRoom.NumberOfSeatsPerRow],
+                        IsChecked = false
+                    };
+                    tempList.Add(seatCheckBox);
+                }
+                seatCheckBoxList.Add(tempList);
+            }
+
+            List<Seat> reservedSeat = _db.Reservation.Where(r => r.IdScheduleEntry == id).Include(s => s.Seat).Select(s => s.Seat).ToList();
+            foreach(var seat in reservedSeat)
+            {
+                seatCheckBoxList[seat.RowNumber][seat.SeatNumber].IsChecked = true;
+            }
+
+            ChooseSeatVM chooseSeatVM = new ChooseSeatVM() { ScheduleEntryId = id, SeatCheckBoxList = seatCheckBoxList };
+
+            return View(chooseSeatVM);
         }
 
         [HttpPost]

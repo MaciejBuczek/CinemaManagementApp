@@ -1,0 +1,126 @@
+﻿@model SBD_TO_Project.Models.ViewModels.ReservationVM
+
+<form method="post" asp-action="CreateConfirm">
+    <div class="row">
+        <div class="col-6 offset-1">
+            <div class="row mb-3">
+                <h2 class="text-dark pl-3">
+                    Reservation Details
+                </h2>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Title: </span>
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">@Model.ScheduleEntry.Movie.Title</span>
+                </div>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Cinema: </span>
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">@Model.ScheduleEntry.Schedule.Cinema.Name</span>
+                </div>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Reserved Seats: </span>
+                </div>
+                <div class="col-9">
+                    @for (int i = 0; i < Model.Seats.Count; i++)
+                    {
+                        <div class="row">
+                            <span>&nbsp;&nbsp; Seat @(i+1)</span>
+                            <span class="text-primary">&nbsp;(Row: @Model.Seats[i].RowNumber&nbsp;</span>
+                            <span class="text-primary">Seat: @Model.Seats[i].SeatNumber)</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="row mb-3">
+                <h2 class="text-dark pl-3">
+                    Customer Details
+                </h2>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Name: </span>
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">@(Model.Customer.FirstName+" "+Model.Customer.LastName)</span>
+                </div>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Email: </span>
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">@Model.Customer.Email</span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <h2 class="text-dark pl-3">
+                    Payment Details
+                </h2>
+            </div>
+            <div class="form-group row h5">
+                <div class="col-3">
+                    <span>Total Price: </span>
+                </div>
+                <div class="col-9">
+                    <span class="text-primary">@(Model.Order.Price)</span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-3">
+                    <label asp-for="Payment.Type"></label>
+                </div>
+                <div class="col-6">
+                    <select asp-for="Payment.Type" asp-items="@Model.PaymentSelectList" class="form-control" id="selectPM">
+                        <option disabled selected>--Select Payment Method--</option>
+                    </select>
+                    <span asp-validation-for="Payment.Type" class="text-danger"></span>
+                </div>
+            </div>
+            <input asp-for="ScheduleEntry.Id" hidden />
+            <input asp-for="Customer.Id" hidden />
+            <input asp-for="Order.Price" hidden />
+            @for (int i = 0; i < Model.Seats.Count; i++)
+            {
+                <input asp-for="Seats[i].Id" hidden />
+            }
+            <div class="form-group row">
+                <div class="col-8 offset-4 row">
+
+                    <div class="col">
+                        <input type="submit" onclick="return validateInput()" class="btn btn-info w-100" value="Confirm Reservation" />
+                    </div>
+                    <div class="col">
+                        <a asp-controller="CinemaBrowse" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <img src="@(WebConstants.ImageMoviePath + Model.ScheduleEntry.Movie.Image)" style="width: 100%; border-radius: 5px; border: 1px solid #bbb" />
+        </div>       
+    </div>
+</form>
+
+@section Scripts{ 
+    <script>
+        function validateInput() {
+            if (document.getElementById("selectPM").value == "--Select Payment Method--") {
+                Swal.fire(
+                    'Error!',
+                    'Please select the payment method',
+                    'error'
+                )
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

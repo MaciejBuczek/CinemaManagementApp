@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SBD_TO_Project.Models.Schedule>
+
+@{ 
+    var dayOfWeek = DayOfWeek.Monday;
+}
+
+<div class="container">
+    <div class="text-center">
+        @for (int i = 0; i < 6; i++)
+        {
+            <button class="btn btn-outline-secondary filter-button" data-filter="@dayOfWeek.ToString()">@dayOfWeek.ToString()</button>
+            dayOfWeek += 1;
+        }
+        <button class="btn btn-outline-secondary filter-button" data-filter="@DayOfWeek.Sunday.ToString()">@DayOfWeek.Sunday.ToString()</button>
+    </div>
+    <br />
+    @if (Model.First().Id != 0)
+    {
+        <div class="row">
+            <div class="h1">Whole Week Schedule In @Model.First().Cinema.Name</div>
+        </div>
+        <div class="row">
+            @foreach (var schedule in Model)
+            {
+                <partial name="_IndividualSchedule" model="schedule" />
+            }
+        </div>
+    }
+    else
+    {
+        <h1>No schedules assigned to @Model.First().Cinema.Name, sorry</h1>
+    }
+</div>
+
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+
+            $(".filter-button").click(function () {
+
+                var value = $(this).attr('data-filter');
+
+                $(".filter").not('.' + value).hide('3000');
+                $('.filter').filter('.' + value).show('3000');
+            });
+
+            $(".filter").not('.Monday').hide();
+            $('.filter').filter('.Monday').show();
+        });
+    </script>
+}
