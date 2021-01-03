@@ -41,8 +41,6 @@ namespace SBD_TO_Project.Controllers
                 .Include(c => c.Cinema).Include(se => se.ScheduleEntries).ThenInclude(sr => sr.ScreeningRoom).ThenInclude( s => s.Seats)
                 .Include(se => se.ScheduleEntries).ThenInclude(m => m.Movie).Include(se => se.ScheduleEntries).ThenInclude(r => r.Reservations).ToList();
 
-
-
             if(schedules.Count == 0)
             {
                 schedules.Add(new Schedule()
