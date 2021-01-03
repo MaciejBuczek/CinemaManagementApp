@@ -1,0 +1,65 @@
+﻿@model SBD_TO_Project.Models.Schedule
+
+@{ 
+    var isLogged = User.Identity.IsAuthenticated && User.IsInRole(WebConstants.CustomerRole);
+
+    List<int> avilableSeatsList = new List<int>();
+
+    foreach(var obj in Model.ScheduleEntries)
+    {
+        avilableSeatsList.Add(obj.ScreeningRoom.Seats.Where(s => s.IsValid).Count());
+    }
+}
+
+<div class="col-12 mt-4 filter @Model.Date.DayOfWeek">
+    @if (Model.ScheduleEntries != null)
+    {
+        <div class="h1">
+            <span class="text-primary font-weight-bold">@Model.Date.DayOfWeek</span>
+            <span class="text-info ml-2">@Model.Date.ToShortDateString()</span>
+        </div>
+        @if (!isLogged)
+        {
+            <div class="h3 text-secondary">
+                Please login to buy a ticket online
+            </div>
+        }
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th style="width:15%">Screening time</th>
+                    <th style="width:40%">Title</th>
+                    <th style="width:10%">Room</th>
+                    <th style="width:10%">Price</th>
+                    <th style="width:10%">Free Seats</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i=0; i<Model.ScheduleEntries.Count; i++)
+                {
+                    var se = Model.ScheduleEntries.ElementAtOrDefault(i);
+                    var avilableSeats = avilableSeatsList[i];
+                    <tr>
+                        <td>@(se.StartTime.ToString(@"hh\:mm") + " - " +(se.StartTime + se.Movie.Length).ToString(@"hh\:mm"))</td>
+                        <td>@se.Movie.Title</td>
+                        <td>@se.ScreeningRoom.ScreeningRoomNumber</td>
+                        <td>@se.Price</td>
+                        <td>@((avilableSeats - se.Reservations.Count)+"/"+avilableSeats)</td>
+
+                        @if (isLogged)
+                        {
+                            <td>
+                                <a asp-route-Id="@se.Id" asp-controller="Seat" asp-action="Choose" class="btn btn-primary text-white">Buy a ticket</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h3>No movies are screening this day, sorry.</h3>
+    }
+</div>

@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace SBD_TO_Project.Models.ViewModels
 {
-    public class SeatVM
+    public class ScheduleVM
     {
-        public int IdCinema { get; set; }
-
-        public List<List<Seat>> Seats { get; set; }
+        public Schedule Schedule { get; set; }
+        public int FreeSeats { get; set; }
     }
 }

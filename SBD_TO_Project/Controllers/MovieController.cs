@@ -79,7 +79,6 @@ namespace SBD_TO_Project.Controllers
                 _db.Movie.Add(movieVM.Movie);
                 _db.SaveChanges();
 
-                //return RedirectToAction("Create","MovieGenre", new { id = movieVM.Movie.Id});
                 return RedirectToAction("Index");
 
             }
