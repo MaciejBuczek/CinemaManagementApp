@@ -20,6 +20,6 @@ namespace SBD_TO_Project.Models
         [ForeignKey("IdPayment")]
         public virtual Payment Payment { get; set; }
 
-        public virtual ICollection<Reservation> ScheduleEntries { get; set; }
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

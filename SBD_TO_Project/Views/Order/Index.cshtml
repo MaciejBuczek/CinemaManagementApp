@@ -1,0 +1,56 @@
+﻿@model SBD_TO_Project.Models.Order
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Order Details</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Reservation" asp-action="Index" class=" btn btn-primary">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        Order No.
+                    </th>
+                    <th>
+                        Order Created At
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Payment Method
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-bottom">
+                    <td>
+                        @Model.Id
+                    </td>
+                    <td>
+                        @Model.Date
+                    </td>
+                    <td>
+                        @Model.Price
+                    </td>
+                    <td>
+                        @Model.Status
+                    </td>
+                    <td>
+                        @Model.Payment.Type.Replace('_',' ')
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</div>

@@ -41,9 +41,10 @@
                                     }
                                     @if (User.IsInRole(WebConstants.AdminRole))
                                     {
-                                      <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Employee" asp-action="ManagerIndex">Managers</a>
+                                        <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Employee" asp-action="ManagerIndex">Managers</a>
                                     }
                                     <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Comment" asp-action="Index">Comments</a>
+                                    <a class="nav-link text-dark font-weight-bold" asp-area="" asp-controller="Reservation" asp-action="Index">Reservations</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Genre" asp-action="Index">Genres</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Actor" asp-action="Index">Actors</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Director" asp-action="Index">Directors</a>
@@ -56,6 +57,9 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Comment" asp-action="Index">Comments</a>
                             </li>
+                            <li>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Index">Reservations</a>
+                            </li>                           
                         }
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MovieBrowse" asp-action="Index">Browse Movies</a>
@@ -63,6 +67,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="CinemaBrowse" asp-action="Index">Browse Cinemas</a>
                         </li>
+                        @if (User.IsInRole(WebConstants.CustomerRole))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reservation" asp-action="Index">My Reservations</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
