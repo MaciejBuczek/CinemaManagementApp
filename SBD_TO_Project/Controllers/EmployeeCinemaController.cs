@@ -25,9 +25,17 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index(int id)
         {
-            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).ToList();
+            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).Where(e => e.Employee.IdManager != null).ToList();
             if (objList.Count == 0)
                 objList.Add(new CinemaEmployee(){Cinema = _db.Cinema.Find(id)});
+            return View(objList);
+        }
+
+        public IActionResult ManagerIndex(int id)
+        {
+            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).Where(e => e.Employee.IdManager == null).ToList();
+            if (objList.Count == 0)
+                objList.Add(new CinemaEmployee() { Cinema = _db.Cinema.Find(id) });
             return View(objList);
         }
 

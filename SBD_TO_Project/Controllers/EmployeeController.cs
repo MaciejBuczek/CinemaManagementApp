@@ -21,7 +21,18 @@ namespace SBD_TO_Project.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Employee> objList = _db.Employee.Where(e => e.IdManager == _userManager.GetUserId(User));
+            IEnumerable<Employee> objList;
+            if(User.IsInRole(WebConstants.AdminRole))
+                objList = _db.Employee.Where(e => e.IdManager != null);
+            else
+                objList = _db.Employee.Where(e => e.IdManager == _userManager.GetUserId(User));
+
+            return View(objList);
+        }
+
+        public IActionResult ManagerIndex()
+        {
+            IEnumerable<Employee> objList = _db.Employee.Where(e => e.IdManager == null);
             return View(objList);
         }
 

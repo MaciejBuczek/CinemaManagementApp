@@ -30,22 +30,43 @@
             <tbody>
                 @foreach (var obj in Model)
                 {
-                    <tr>
-                        <td>
-                            @obj.Name
-                        </td>
-                        <td class="d-flex justify-content-center">
-                            <a asp-route-Id="@obj.Id" asp-action="Details" class="btn btn-info m-0 mr-4" style="width:100%">
-                                <i class="fas fa-info-circle"></i> &nbsp; Details
+                <tr>
+                    <td>
+                        @obj.Name
+                    </td>
+                    <td class="d-flex justify-content-center">
+                        <a asp-route-Id="@obj.Id" asp-action="Details" class="btn btn-info m-0 mr-2" style="width:100%">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                        @if (User.IsInRole(WebConstants.AdminRole))
+                        {
+                            <a asp-route-Id="@obj.Id" asp-controller="EmployeeCinema" asp-action="ManagerIndex" class="btn btn-dark m-0 mr-2" style="width:100%; background-color:mediumvioletred; border:0">
+                                <i class="fas fa-user-tie"></i>
                             </a>
-                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:100%">
-                                <i class="fas fa-edit"></i> &nbsp; Edit
+                        }
+                        @if (User.IsInRole(WebConstants.AdminRole) || User.IsInRole(WebConstants.ManagerRole))
+                        {
+                            <a asp-route-Id="@obj.Id" asp-controller="EmployeeCinema" asp-action="Index" class="btn btn-success m-0 mr-2" style="width:100%">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        }
+                        @if (!User.IsInRole(WebConstants.CustomerRole) && User.Identity.IsAuthenticated)
+                        {
+                            <a asp-route-Id="@obj.Id" asp-controller="Schedule" asp-action="Index" class="btn btn-dark m-0 mr-2" style="width:100%">
+                                <i class="fas fa-film"></i>
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-controller="ScreeningRoom" asp-action="Index" class="btn btn-primary m-0 mr-2" style="width:100%">
+                                <i class="fas fa-couch"></i>
+                            </a>
+                            <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-2" style="width:100%">
+                                <i class="fas fa-edit"></i>
                             </a>
                             <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:100%">
-                                <i class="fas fa-trash-alt"></i> &nbsp; Delete
+                                <i class="fas fa-trash-alt"></i>
                             </a>
-                        </td>
-                    </tr>
+                        }
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
