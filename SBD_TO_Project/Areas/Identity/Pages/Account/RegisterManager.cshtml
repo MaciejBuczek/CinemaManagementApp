@@ -57,7 +57,14 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Register</button>
+            <div class="col-8 offset-2 row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </div>
+                <div class="col">
+                    <a asp-controller="Employee" asp-action="Index" class="btn btn-info w-100">Back</a>
+                </div>
+            </div>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

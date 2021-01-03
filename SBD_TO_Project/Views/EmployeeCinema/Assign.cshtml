@@ -82,9 +82,18 @@
                                 <input type="submit" class="btn btn-info w-100" value="Assign" />
                             </div>
                         }
-                        <div class="col">
-                            <a asp-route-Id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
-                        </div>
+                        @if (((Employee)Model.EmployeeCheckBoxList.First().Object).IdManager == null)
+                        {
+                            <div class="col">
+                                <a asp-route-id="@Model.IdCinema" asp-action="ManagerIndex" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <a asp-route-id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
