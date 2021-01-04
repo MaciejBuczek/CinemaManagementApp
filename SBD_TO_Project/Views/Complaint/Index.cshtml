@@ -1,0 +1,131 @@
+﻿@model IEnumerable<SBD_TO_Project.Models.Complaint>
+
+@{ 
+    var bclass ="";
+}
+
+<div class=" container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Complaint List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-controller="Reservation" asp-action="Index" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
+        </div>
+    </div>
+
+    <br /><br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class=" table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    @if (!User.IsInRole(WebConstants.CustomerRole))
+                    {
+                        <th>
+                            User Email
+                        </th>
+                    }
+                    <th>
+                        Order No.
+                    </th>
+                    <th>
+                        Topic
+                    </th>
+                    <th>
+                        Content
+                    </th>
+                    @if (User.IsInRole(WebConstants.CustomerRole))
+                    {
+                        <th>
+                            Outcome
+                        </th>
+                    }
+                    @if (!User.IsInRole(WebConstants.CustomerRole))
+                    {
+                        <th>
+                            Action
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var obj in Model)
+                {
+                    <tr class="border-bottom">
+                        @if (!User.IsInRole(WebConstants.CustomerRole))
+                        {
+                            <td>
+                                @obj.Order.Reservations.First().Customer.Email
+                            </td>
+                        }
+                        <td>
+                            @obj.Order.Id
+                        </td>
+                        <td>
+                            @obj.Topic
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-primary" onclick="showContent('@(obj.ComplaintContent.Replace('\'',' '))')">Show</a>
+                        </td>
+                        @if (User.IsInRole(WebConstants.CustomerRole))
+                        {
+                            @if(obj.Outcome == WebConstants.ComplaintOutcome.Positive.ToString())
+                            {
+                                bclass = "text-success";
+                            }
+                            else if(obj.Outcome == WebConstants.ComplaintOutcome.Negative.ToString())
+                            {
+                                bclass = "text-danger";
+                            }
+                            else
+                            {
+
+                                bclass = "text-warning";
+                            }
+                            <td class="@bclass font-weight-bold">
+                                @obj.Outcome
+                            </td>
+                        }
+                        @if (!User.IsInRole(WebConstants.CustomerRole))
+                        {
+                            <td class="d-flex justify-content-center border-0">
+                                <a asp-route-Id="@obj.Id" asp-action="Positive" class="btn btn-success m-0 mr-2" style="width:100%">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </a>
+                                <a asp-route-Id="@obj.Id" asp-action="Negative" class="btn btn-danger" style="width:100%">
+                                    <i class="fas fa-thumbs-down"></i>
+                                </a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No complaints exist.</p>
+    }
+</div>
+
+@section Scripts{
+    <script>
+        function showContent(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Title</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+}

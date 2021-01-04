@@ -14,7 +14,8 @@ namespace SBD_TO_Project
         public static string EmployeeRole = "Employee";
         public static string CustomerRole = "Customer";
 
-        public enum PaymentMethod { 
+        public enum PaymentMethod 
+        { 
             Bank_Transfer,
             Credit_Card,
             Cash
@@ -24,6 +25,13 @@ namespace SBD_TO_Project
         {
             Paid,
             Not_Paid
+        }
+
+        public enum ComplaintOutcome
+        {
+            Positive,
+            Negative,
+            Pending
         }
     }
 }
