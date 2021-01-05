@@ -9,7 +9,9 @@
             <a asp-route-id="@Model.First().IdSchedule"  asp-action="Create" class=" btn btn-primary">
                 <i class="fas fa-plus"></i>&nbsp; Add Entry
             </a>
-            <a asp-route-id="@Model.First().Schedule.IdCinema" asp-controller="Schedule" asp-action="Index" class=" btn btn-info">Back</a>
+            <a asp-route-id="@Model.First().Schedule.IdCinema" asp-controller="Schedule" asp-action="Index" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
         </div>
     </div>
 

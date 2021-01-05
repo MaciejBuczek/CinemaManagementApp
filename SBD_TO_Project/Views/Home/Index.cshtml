@@ -1,8 +1,66 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model SBD_TO_Project.Models.ViewModels.IndexMoviesVM
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class=" container p-3">
+    @if (Model.RecommendedMovies.Count > 0)
+    {
+        <div class="row pt-4">
+            <div class="col-6">
+                <h2 class="text-primary">Recommended</h2>
+            </div>
+        </div>
+        <br />
+        <div class="row text-center">
+            <ul class="row col-auto ml-auto mr-auto">
+                @foreach (var movie in Model.RecommendedMovies)
+                {
+                    <partial name="_RecommendedMovieCard" model="movie" />
+                }
+            </ul>
+        </div>
+    }
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Newest Movies</h2>
+        </div>
+    </div>
+    <br />
+    <div class="row text-center">
+        <ul class="row col-auto ml-auto mr-auto">
+            @foreach (var movie in Model.NewestMovies)
+            {
+                <partial name="_RecommendedMovieCard" model="movie" />
+            }
+        </ul>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        function showTitle(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Title</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+        function showGenres(htmlContent) {
+            Swal.fire({
+                title: '<strong>Movie Genres</strong>',
+                icon: 'info',
+                html:
+                    htmlContent,
+                showCloseButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Ok'
+            })
+            return true;
+        }
+    </script>
+}

@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="col-6 text-right">
-            <a asp-route-id="@Model.Movie.Id" asp-controller="" asp-action="" class=" btn btn-primary">
+            <a asp-route-id="@Model.Movie.Id" asp-controller="CinemaBrowse" asp-action="CheckInCinema" class=" btn btn-primary">
                 <i class="fas fa-search"></i>&nbsp; Check in cinemas
             </a>
             <a asp-action="Index" class=" btn btn-info">
@@ -45,8 +45,8 @@
         </div>
     </div>
     <div class="row pt-4">
-        <div class="col-8 text-left">
-            @Html.Raw(@Model.Movie.Description)
+        <div class="col-8 text-left" style="overflow-wrap: break-word; word-break: break-all; word-break: break-word;">
+             @Html.Raw(@Model.Movie.Description)
         </div>
         <div class="col-4 text-right">
             <img class="img-fluid d-block mx-auto mb-3 float-left" src="@(WebConstants.ImageMoviePath+Model.Movie.Image)" alt="Card image cap">
@@ -160,6 +160,7 @@
             </div>
         }
 </div>
+
 @section Scripts {
     <script>
         function showDirector(htmlContent) {
