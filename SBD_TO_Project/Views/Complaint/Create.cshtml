@@ -1,0 +1,54 @@
+﻿@model SBD_TO_Project.Models.Complaint
+
+<form method="post" asp-action="Create">
+    <input asp-for="IdOrder" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Create new Complaint
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Topic"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Topic" class="form-control" />
+                        <span asp-validation-for="Topic" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="ComplaintContent"></label>
+                    </div>
+                    <div class="col-8">
+                        <textarea asp-for="ComplaintContent" class="form-control summernote"></textarea>
+                        <span asp-validation-for="ComplaintContent" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="Create" />
+                        </div>
+                        <div class="col">
+                            <a asp-controller="Reservation" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('.summernote').summernote({
+                height: 250
+            });
+        });
+    </script>
+}

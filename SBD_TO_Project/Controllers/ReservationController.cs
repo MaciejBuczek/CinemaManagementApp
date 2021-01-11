@@ -25,7 +25,31 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            IEnumerable<Order> objList = null;
+            if (User.IsInRole(WebConstants.CustomerRole))
+            {
+                objList = _db.Order.Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.Schedule).ThenInclude(s => s.Cinema)
+                    .Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.ScreeningRoom)
+                    .Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.Movie)
+                    .Include(o => o.Reservations).ThenInclude(r => r.Seat)
+                    .Include(o => o.Reservations).ThenInclude(r => r.Customer)
+                    .Where(o => o.Reservations.All(r => r.IdCustomer == _userManager.GetUserId(User)));
+            }
+            else if (User.IsInRole(WebConstants.EmployeeRole) || User.IsInRole(WebConstants.ManagerRole))
+            {
+                List<int> cinemasIds = _db.CinemaEmployee.Where(ce => ce.IdEmployee == _userManager.GetUserId(User)).Select(ce => ce.IdCinema).Distinct().ToList();
+                objList = _db.Order.Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.Schedule).ThenInclude(s => s.Cinema)
+                    .Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.ScreeningRoom)
+                    .Include(o => o.Reservations).ThenInclude(r => r.ScheduleEntry).ThenInclude(se => se.Movie)
+                    .Include(o => o.Reservations).ThenInclude(r => r.Seat)
+                    .Include(o => o.Reservations).ThenInclude(r => r.Customer)
+                    .Where(o => o.Reservations.All(r => cinemasIds.Contains(r.ScheduleEntry.Schedule.Cinema.Id)));                   ;
+            }
+            else
+            {
+                objList = _db.Order;
+            }
+            return View(objList);
         }
 
         [HttpPost]
@@ -88,7 +112,20 @@ namespace SBD_TO_Project.Controllers
                 _db.Add(reservation);
                 _db.SaveChanges();
             }
-            return View();
+            return RedirectToAction("Index");
+        }
+        public IActionResult Delete(int id)
+        {
+            var order = _db.Order.Find(id);
+            var payment = _db.Payment.Find(order.IdPayment);
+            if(order == null || payment == null)
+            {
+                return NotFound();
+            }
+            _db.Remove(order);
+            _db.Remove(payment);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
