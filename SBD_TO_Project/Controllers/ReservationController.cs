@@ -76,7 +76,7 @@ namespace SBD_TO_Project.Controllers
                 Payment = new Payment(),
                 Order = new Order()
                 {
-                    Price = (float)(seats.Count * scheduleEntry.Price)
+                    Price = (float)(Math.Round(seats.Count * scheduleEntry.Price * 0.95, 2))
                 },
                 PaymentSelectList = ((IEnumerable<WebConstants.PaymentMethod>)Enum.GetValues(typeof(WebConstants.PaymentMethod))).Select(pm => new SelectListItem { 
                     Text = pm.ToString().Replace('_', ' '),
@@ -112,6 +112,17 @@ namespace SBD_TO_Project.Controllers
                 _db.Add(reservation);
                 _db.SaveChanges();
             }
+
+            IEnumerable<Reservation> reservations = _db.Reservation.Where(r => r.IdCustomer == _userManager.GetUserId(User));
+            if(reservations.Count() >= 10)
+            {
+                Customer customer = _db.Customer.Where(c => c.Id == _userManager.GetUserId(User)).FirstOrDefault();
+                customer.IsRegularCustomer = true;
+                _db.Update(customer);
+                _db.SaveChanges();
+            }
+
+
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
