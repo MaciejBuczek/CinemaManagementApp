@@ -30,7 +30,15 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult CheckInCinema(int id)
         {
-            List<int> validIds = _db.ScheduleEntry.Where(se => se.IdMovie == id).Include(s => s.Schedule).Select(se => se.Schedule.IdCinema).ToList();
+            int weekDay = (int)DateTime.Today.DayOfWeek;
+            if (weekDay == 0)
+                weekDay = 7;
+
+            DateTime beginDate = DateTime.Today.AddDays(-(weekDay - 1));
+            DateTime endDate = DateTime.Today.AddDays((7 - weekDay));
+            endDate += new TimeSpan(23, 59, 59);
+
+            List<int> validIds = _db.ScheduleEntry.Where(se => se.IdMovie == id).Include(s => s.Schedule).Where(se => se.Schedule.Date <= endDate && se.Schedule.Date >= beginDate).Select(se => se.Schedule.IdCinema).ToList();
             CinemaBrowseVM cinemaBrowseVM = new CinemaBrowseVM()
             {
                 Cinemas = _db.Cinema.Where(c => validIds.Contains(c.Id)).ToList(),
