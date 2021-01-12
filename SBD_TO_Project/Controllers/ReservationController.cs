@@ -69,15 +69,19 @@ namespace SBD_TO_Project.Controllers
             ScheduleEntry scheduleEntry = _db.ScheduleEntry.Where(se => se.Id == chooseSeatVM.ScheduleEntryId).Include(m => m.Movie).
                 Include(s => s.Schedule).ThenInclude(c => c.Cinema).FirstOrDefault();
 
+            Order order;
+
+            if (scheduleEntry.NewPrice != null)
+                order = new Order { Price = (float)(Math.Round((double)(seats.Count * scheduleEntry.NewPrice * 0.95), 2)) };
+            else
+                order = new Order { Price = (float)(Math.Round(seats.Count * scheduleEntry.Price * 0.95, 2)) };
+
             ReservationVM reservationVM = new ReservationVM()
             {
                 ScheduleEntry = scheduleEntry,
                 Customer = _db.Customer.Find(_userManager.GetUserId(User)),
                 Payment = new Payment(),
-                Order = new Order()
-                {
-                    Price = (float)(Math.Round(seats.Count * scheduleEntry.Price * 0.95, 2))
-                },
+                Order = order,
                 PaymentSelectList = ((IEnumerable<WebConstants.PaymentMethod>)Enum.GetValues(typeof(WebConstants.PaymentMethod))).Select(pm => new SelectListItem { 
                     Text = pm.ToString().Replace('_', ' '),
                     Value = pm.ToString()

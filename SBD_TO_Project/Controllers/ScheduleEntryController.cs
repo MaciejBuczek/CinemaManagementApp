@@ -31,6 +31,46 @@ namespace SBD_TO_Project.Controllers
             return View(objList);
         }
 
+        public IActionResult AddPromotion(int Id)
+        {
+            ScheduleEntry obj = _db.ScheduleEntry.Find(Id);
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddPromotion(ScheduleEntry obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index", new { id = obj.IdSchedule });
+            }
+            return View(obj);
+        }
+
+        public IActionResult RemovePromotion(int Id)
+        {
+            ScheduleEntry obj = _db.ScheduleEntry.Find(Id);
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RemovePromotionPost(int id)
+        {
+            var obj = _db.ScheduleEntry.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            obj.NewPrice = null;
+            _db.Update(obj);
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = obj.IdSchedule });
+        }
+
         public IActionResult Create(int Id)
         {
             Schedule schedule = _db.Schedule.Find(Id);           

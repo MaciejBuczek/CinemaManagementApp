@@ -18,6 +18,8 @@ namespace SBD_TO_Project.Models
         [Required]
         public double Price { get; set; }
 
+        public double? NewPrice { get; set; }
+
         [Display(Name = "Movie")]
         public int IdMovie { get; set; }
         [ForeignKey("IdMovie")]
