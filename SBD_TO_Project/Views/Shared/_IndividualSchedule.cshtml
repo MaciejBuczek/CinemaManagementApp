@@ -44,20 +44,39 @@
                 {
                     var se = Model.ScheduleEntries.ElementAtOrDefault(i);
                     var avilableSeats = avilableSeatsList[i];
-                    <tr>
-                        <td>@(se.StartTime.ToString(@"hh\:mm") + " - " +(se.StartTime + se.Movie.Length).ToString(@"hh\:mm"))</td>
-                        <td>@se.Movie.Title</td>
-                        <td>@se.ScreeningRoom.ScreeningRoomNumber</td>
-                        <td>@se.Price</td>
-                        <td>@((avilableSeats - se.Reservations.Count)+"/"+avilableSeats)</td>
+                <tr>
+                    <td>@(se.StartTime.ToString(@"hh\:mm") + " - " +(se.StartTime + se.Movie.Length).ToString(@"hh\:mm"))</td>
+                    <td>@se.Movie.Title</td>
+                    <td>@se.ScreeningRoom.ScreeningRoomNumber</td>
+                    <td>
+                        @if (se.NewPrice == null)
+                        {
+                            @se.Price
+                        }
+                        else
+                        {
+                            <span style="text-decoration:line-through; color:red;">&nbsp;@se.Price&nbsp;</span>
+                            <span style="color:green;">@se.NewPrice</span>
+                        }
+                    </td>
+                    <td>@((avilableSeats - se.Reservations.Count)+"/"+avilableSeats)</td>
 
-                        @if (isLogged)
+                    @if (isLogged)
+                    {
+                        if ((avilableSeats - se.Reservations.Count) != 0)
                         {
                             <td>
                                 <a asp-route-Id="@se.Id" asp-controller="Seat" asp-action="Choose" class="btn btn-primary text-white">Buy a ticket</a>
                             </td>
                         }
-                    </tr>
+                        else
+                        {
+                            <td>
+                                <span>No more seats avaible</span>
+                            </td>
+                        }
+                    }
+                </tr>
                 }
             </tbody>
         </table>

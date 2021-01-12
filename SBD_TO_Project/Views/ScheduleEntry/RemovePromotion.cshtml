@@ -1,0 +1,71 @@
+﻿@model SBD_TO_Project.Models.ScheduleEntry
+
+<form method="post" asp-action="RemovePromotionPost">
+    <input asp-for="IdMovie" hidden />
+    <input asp-for="IdSchedule" hidden />
+    <input asp-for="IdScreeningRoom" hidden />
+    <input asp-for="Id" hidden />
+    <input asp-for="StartTime" hidden />
+    <input asp-for="Price" hidden />
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-dark pl-3">
+                Remove Promotion
+            </h2>
+        </div>
+        <div class="form-group row">
+            <h4 class="text-danger pl-3">
+                Are you sure you want to delete the following promotion?
+            </h4>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Price"></label>
+                    </div>
+                    <div class="col-8">
+                        <input id="price" asp-for="Price" class="form-control" disabled />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="NewPrice"></label>
+                    </div>
+                    <div class="col-8">
+                        <input id="newPrice" asp-for="NewPrice" class="form-control" disabled />
+                        <span asp-validation-for="NewPrice" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger w-100" value="Create">Delete</button>
+                        </div>
+                        <div class="col">
+                            <a asp-route-id="@Model.IdSchedule" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    <script>
+        function validateInput() {
+            var price = parseInt(document.getElementById("price").value);
+            var newPrice = parseInt(document.getElementById("newPrice").value);
+            if (newPrice < 0 || newPrice > price) {
+                Swal.fire(
+                    'Error!',
+                    'New Price must be higher than 0 and lower than current price',
+                    'error'
+                )
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

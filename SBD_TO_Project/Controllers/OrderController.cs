@@ -26,5 +26,15 @@ namespace SBD_TO_Project.Controllers
             var obj = _db.Order.Where(o => o.Id == id).Include(o => o.Payment).FirstOrDefault();
             return View(obj);
         }
+
+        public IActionResult Accept(int id)
+        {
+            var obj = _db.Order.Where(o => o.Id == id).Include(o => o.Payment).FirstOrDefault();
+            obj.Status = "Paid";
+            _db.Update(obj);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index", "Reservation");
+        }
     }
 }

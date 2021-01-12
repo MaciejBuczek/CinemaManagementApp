@@ -70,7 +70,18 @@
                     <span>Total Price: </span>
                 </div>
                 <div class="col-9">
-                    <span class="text-primary">@(Model.Order.Price)</span>
+                    <span class="text-primary">
+                        @if (Model.Customer.IsRegularCustomer)
+                        {
+
+                            @(Model.Order.Price)
+                            <span class="text-success">(regular customer discount 5%)</span>
+                        }
+                        else
+                        {
+                            @(Model.Order.Price)
+                        }
+                    </span>
                 </div>
             </div>
             <div class="form-group row">

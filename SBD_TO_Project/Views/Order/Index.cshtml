@@ -31,6 +31,12 @@
                     <th>
                         Payment Method
                     </th>
+                    @if(User.IsInRole(WebConstants.EmployeeRole) && Model.Status.Equals("Not_Paid"))
+                    {
+                        <th>
+                            Action
+                        </th>
+                    }
                 </tr>
             </thead>
             <tbody>
@@ -45,11 +51,19 @@
                         @Model.Price
                     </td>
                     <td>
-                        @Model.Status
+                        @Model.Status.Replace('_', ' ')
                     </td>
                     <td>
-                        @Model.Payment.Type.Replace('_',' ')
+                        @Model.Payment.Type.Replace('_', ' ')
                     </td>
+                    @if (User.IsInRole(WebConstants.EmployeeRole) && Model.Status.Equals("Not_Paid"))
+                    {
+                        <td>
+                            <a asp-route-Id="@Model.Id" asp-controller="Order" asp-action="Accept" class="btn btn-success m-0" style="width:100%">
+                                <i class="fas fa-thumbs-up"></i>
+                            </a>
+                        </td>
+                    }
                 </tr>
             </tbody>
         </table>
