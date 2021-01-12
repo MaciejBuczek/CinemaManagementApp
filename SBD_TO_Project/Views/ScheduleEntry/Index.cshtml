@@ -9,7 +9,9 @@
             <a asp-route-id="@Model.First().IdSchedule"  asp-action="Create" class=" btn btn-primary">
                 <i class="fas fa-plus"></i>&nbsp; Add Entry
             </a>
-            <a asp-route-id="@Model.First().Schedule.IdCinema" asp-controller="Schedule" asp-action="Index" class=" btn btn-info">Back</a>
+            <a asp-route-id="@Model.First().Schedule.IdCinema" asp-controller="Schedule" asp-action="Index" class=" btn btn-info">
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
+            </a>
         </div>
     </div>
 
@@ -35,6 +37,9 @@
                     <th>
                         Price
                     </th>
+                    <th>
+                        Manage Schedule Entry
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -54,14 +59,34 @@
                         @obj.ScreeningRoom.ScreeningRoomNumber
                     </td>
                     <td>
-                        @obj.Price
+                        @if (obj.NewPrice == null)
+                        {
+                            @obj.Price
+                        }
+                        else
+                        {
+                            <span style="text-decoration:line-through; color:red;">&nbsp;@obj.Price&nbsp;</span>
+                            <span style="color:green;">@obj.NewPrice</span>
+                        }
                     </td>
                     <td class="d-flex justify-content-center">
-                        <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-4" style="width:40%">
-                            <i class="fas fa-edit"></i>&nbsp; Edit
+                        @if (obj.NewPrice == null)
+                        {
+                            <a asp-route-Id="@obj.Id" asp-action="AddPromotion" class="btn btn-success m-0 mr-2" style="width:100%">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-route-Id="@obj.Id" asp-action="RemovePromotion" class="btn btn-danger m-0 mr-2" style="width:100%">
+                                <i class="fas fa-hand-holding-usd"></i>
+                            </a>
+                        }
+                        <a asp-route-Id="@obj.Id" asp-action="Edit" class="btn btn-warning m-0 mr-2" style="width:100%">
+                            <i class="fas fa-edit"></i>
                         </a>
-                        <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:40%">
-                            <i class="fas fa-trash-alt"></i>&nbsp; Delete
+                        <a asp-route-Id="@obj.Id" asp-action="Delete" class="btn btn-danger m-0 text-white" style="width:100%">
+                            <i class="fas fa-trash-alt"></i>
                         </a>
                     </td>
                 </tr>

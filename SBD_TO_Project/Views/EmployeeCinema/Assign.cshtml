@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="col-10 offset-1">
-                @if (Model.EmployeeCheckBoxList.Count > 0)
+                @if (Model.EmployeeCheckBoxList.First().IdString != "")
                 {
                     <div class="form-group row">
                         <table class=" table table-bordered table-striped" style="width:100%">
@@ -37,54 +37,63 @@
                                 </tr>
                             </thead>
                             @for (int i = 0; i < Model.EmployeeCheckBoxList.Count(); i++)
-                            {                               
-                        <tr>
-                            @Html.HiddenFor(e => e.EmployeeCheckBoxList[i].IdString)
-                            <td>
-                                @Html.CheckBoxFor(e => e.EmployeeCheckBoxList[i].IsChecked)
-                            </td>
-                            <td>
-                                @(((Employee)Model.EmployeeCheckBoxList[i].Object).FirstName +" "+ ((Employee)Model.EmployeeCheckBoxList[i].Object).LastName)
-                            </td>
-                            <td>
-                                @if (((Employee)Model.EmployeeCheckBoxList[i].Object).PhoneNumber == null)
-                                {
-                                    <span>None</span>
-                                }
-                                else
-                                {
-                                    @(((Employee)Model.EmployeeCheckBoxList[i].Object).PhoneNumber)
-                                }
-                            </td>
-                            <td>
-                                @(((Employee)Model.EmployeeCheckBoxList[i].Object).Email)
-                            </td>
-                            <td>
-                                @(((Employee)Model.EmployeeCheckBoxList[i].Object).Position)
-                            </td>
-                            <td>
-                                @(((Employee)Model.EmployeeCheckBoxList[i].Object).MonthlySalary)
-                            </td>
-                        </tr>
+                            {
+                                <tr>
+                                    @Html.HiddenFor(e => e.EmployeeCheckBoxList[i].IdString)
+                                    <td>
+                                        @Html.CheckBoxFor(e => e.EmployeeCheckBoxList[i].IsChecked)
+                                    </td>
+                                    <td>
+                                        @(((Employee)Model.EmployeeCheckBoxList[i].Object).FirstName +" "+ ((Employee)Model.EmployeeCheckBoxList[i].Object).LastName)
+                                    </td>
+                                    <td>
+                                        @if (((Employee)Model.EmployeeCheckBoxList[i].Object).PhoneNumber == null)
+                                        {
+                                            <span>None</span>
+                                        }
+                                        else
+                                        {
+                                            @(((Employee)Model.EmployeeCheckBoxList[i].Object).PhoneNumber)
+                                        }
+                                    </td>
+                                    <td>
+                                        @(((Employee)Model.EmployeeCheckBoxList[i].Object).Email)
+                                    </td>
+                                    <td>
+                                        @(((Employee)Model.EmployeeCheckBoxList[i].Object).Position)
+                                    </td>
+                                    <td>
+                                        @(((Employee)Model.EmployeeCheckBoxList[i].Object).MonthlySalary)
+                                    </td>
+                                </tr>
                             }
                         </table>
                     </div>
                 }
                 else
                 {
-                    <p>All possible employees are already assigned to this cinema</p>
+                    <h1>All possible employees are already assigned to this cinema</h1>
                 }
                 <div class="form-group row">
                     <div class="col-8 offset-2 row">
-                        @if (Model.EmployeeCheckBoxList.Count > 0)
+                        @if (Model.EmployeeCheckBoxList.First().IdString != "")
                         {
                             <div class="col">
                                 <input type="submit" class="btn btn-info w-100" value="Assign" />
                             </div>
                         }
-                        <div class="col">
-                            <a asp-route-Id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
-                        </div>
+                        @if (((Employee)Model.EmployeeCheckBoxList.First().Object).IdManager == null)
+                        {
+                            <div class="col">
+                                <a asp-route-id="@Model.IdCinema" asp-action="ManagerIndex" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <a asp-route-id="@Model.IdCinema" asp-action="Index" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

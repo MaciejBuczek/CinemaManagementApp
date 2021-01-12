@@ -7,7 +7,7 @@
         </div>
         <div class="col-6 text-right">
             <a asp-action="Index" class=" btn btn-info">
-                <i class="fas fa-arrow-alt-circle-left"></i> &nbsp; Back
+                <i class="fas fa-arrow-alt-circle-left"></i>&nbsp; Back
             </a>
         </div>
     </div>
@@ -37,9 +37,6 @@
                     <th>
                         Apartment no.
                     </th>
-                    <th>
-                        Modify Cinema
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -68,24 +65,9 @@
                         {
                             @Model.Street
                         }
-
                     </td>
                     <td>
                         @Model.ApartmentNumber
-                    </td>
-                    <td class="text-center">
-                        <a asp-route-Id="@Model.Id" asp-controller="EmployeeCinema" asp-action="Index" class="btn btn-success m-0 mr-2" style="width:20%">
-                            <i class="fas fa-briefcase"></i>
-                        </a>
-                        <a asp-route-Id="@Model.Id" asp-controller="Schedule" asp-action="Index" class="btn btn-dark m-0 mr-2" style="width:20%">
-                            <i class="fas fa-film"></i>
-                        </a>
-                        <a asp-route-Id="@Model.Id" asp-controller="ScreeningRoom" asp-action="Index" class="btn btn-primary m-0 mr-2" style="width:20%">
-                            <i class="fas fa-couch"></i>
-                        </a>
-                        <a asp-route-Id="@Model.Id" asp-action="Edit" class="btn btn-warning m-0" style="width:20%">
-                            <i class="fas fa-edit"></i>
-                        </a>
                     </td>
                 </tr>
             </tbody>

@@ -344,14 +344,23 @@ namespace SBD_TO_Project.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdOrder")
+                    b.Property<string>("IdCustomer")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("IdOrder")
                         .HasColumnType("int");
+
+                    b.Property<string>("Outcome")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCustomer");
 
                     b.HasIndex("IdOrder");
 
@@ -448,9 +457,6 @@ namespace SBD_TO_Project.Migrations
                     b.Property<int>("IdPayment")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdReservation")
-                        .HasColumnType("int");
-
                     b.Property<float>("Price")
                         .HasColumnType("real");
 
@@ -461,8 +467,6 @@ namespace SBD_TO_Project.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IdPayment");
-
-                    b.HasIndex("IdReservation");
 
                     b.ToTable("Order");
                 });
@@ -516,16 +520,23 @@ namespace SBD_TO_Project.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("IdCustomer")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("IdScheduleEntry")
+                    b.Property<int>("IdOrder")
                         .HasColumnType("int");
 
-                    b.Property<int?>("IdSeat")
+                    b.Property<int>("IdScheduleEntry")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdSeat")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdCustomer");
+
+                    b.HasIndex("IdOrder");
 
                     b.HasIndex("IdScheduleEntry");
 
@@ -569,6 +580,9 @@ namespace SBD_TO_Project.Migrations
 
                     b.Property<int?>("IdScreeningRoom")
                         .HasColumnType("int");
+
+                    b.Property<double?>("NewPrice")
+                        .HasColumnType("float");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -835,15 +849,23 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdCustomer");
 
                     b.HasOne("SBD_TO_Project.Models.Movie", "Movie")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("IdMovie");
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Complaint", b =>
                 {
+                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("IdCustomer")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SBD_TO_Project.Models.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("IdOrder");
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Movie", b =>
@@ -879,23 +901,31 @@ namespace SBD_TO_Project.Migrations
                         .HasForeignKey("IdPayment")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("SBD_TO_Project.Models.Reservation", "Reservation")
-                        .WithMany()
-                        .HasForeignKey("IdReservation")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Reservation", b =>
                 {
-                    b.HasOne("SBD_TO_Project.Models.ScheduleEntry", "ScheduleEntry")
+                    b.HasOne("SBD_TO_Project.Models.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("IdScheduleEntry");
+                        .HasForeignKey("IdCustomer");
+
+                    b.HasOne("SBD_TO_Project.Models.Order", "Order")
+                        .WithMany("Reservations")
+                        .HasForeignKey("IdOrder")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SBD_TO_Project.Models.ScheduleEntry", "ScheduleEntry")
+                        .WithMany("Reservations")
+                        .HasForeignKey("IdScheduleEntry")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("SBD_TO_Project.Models.Seat", "Seat")
                         .WithMany()
-                        .HasForeignKey("IdSeat");
+                        .HasForeignKey("IdSeat")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SBD_TO_Project.Models.Schedule", b =>

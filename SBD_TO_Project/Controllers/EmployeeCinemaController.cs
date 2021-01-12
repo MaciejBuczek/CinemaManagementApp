@@ -25,28 +25,80 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index(int id)
         {
-            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).ToList();
+            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).Where(e => e.Employee.IdManager != null).ToList();
             if (objList.Count == 0)
                 objList.Add(new CinemaEmployee(){Cinema = _db.Cinema.Find(id)});
             return View(objList);
         }
 
-        public IActionResult Assign(int id)
+        public IActionResult ManagerIndex(int id)
         {
-            List<string> assignedIds = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Select(ce => ce.IdEmployee).ToList();
+            List<CinemaEmployee> objList = _db.CinemaEmployee.Where(ce => ce.IdCinema == id).Include(c => c.Cinema).Include(e => e.Employee).Where(e => e.Employee.IdManager == null).ToList();
+            if (objList.Count == 0)
+                objList.Add(new CinemaEmployee() { Cinema = _db.Cinema.Find(id) });
+            return View(objList);
+        }
+
+        public IActionResult Assign(int id)
+        {          
+            List<string> assignedIds = _db.CinemaEmployee.Include(ce => ce.Employee).Where(ce => ce.IdCinema == id && ce.Employee.IdManager != null).Select(ce => ce.IdEmployee).ToList();
+            List<CheckBoxItem> employeeCheckBoxList = new List<CheckBoxItem>();
+            if (User.IsInRole(WebConstants.AdminRole))
+            {
+                employeeCheckBoxList = _db.Employee.Where(e => e.IdManager != null && !assignedIds.Contains(e.Id)).Select(e => new CheckBoxItem
+                    {
+                        IdString = e.Id,
+                        Object = e,
+                        IsChecked = false
+                    }).ToList();
+            }
+            else
+            {
+                employeeCheckBoxList = _db.Employee.Where(e => e.IdManager == _userManager.GetUserId(User) &&
+                    !assignedIds.Contains(e.Id)).Select(e => new CheckBoxItem
+                    {
+                        IdString = e.Id,
+                        Object = e,
+                        IsChecked = false
+                    }).ToList();
+            }
+            if (employeeCheckBoxList.Count == 0)
+                employeeCheckBoxList.Add(new CheckBoxItem()
+                {
+                    IdString = "",
+                    Object = new Employee() { IdManager = "_"}
+                });
             CinemaEmployeeVM cinemaEmployeeVM = new CinemaEmployeeVM()
             {
                 IdCinema = id,
-                EmployeeCheckBoxList = _db.Employee.Where(e => e.IdManager == _userManager.GetUserId(User) &&
-                    !assignedIds.Contains(e.Id)).Select(e => new CheckBoxItem
-                {
-                    IdString = e.Id,
-                    Object = e,
-                    IsChecked = false
-                }).ToList()
+                EmployeeCheckBoxList = employeeCheckBoxList
             };
 
             return View(cinemaEmployeeVM);
+        }
+
+        public IActionResult ManagerAssign(int id)
+        {
+            List<string> assignedIds = _db.CinemaEmployee.Include(ce => ce.Employee).Where(ce => ce.IdCinema == id && ce.Employee.IdManager == null).Select(ce => ce.IdEmployee).ToList();
+            List<CheckBoxItem> employeeCheckBoxList = _db.Employee.Where(e => e.IdManager == null &&
+                    !assignedIds.Contains(e.Id)).Select(e => new CheckBoxItem
+                    {
+                        IdString = e.Id,
+                        Object = e,
+                        IsChecked = false
+                    }).ToList();
+            CinemaEmployeeVM cinemaEmployeeVM = new CinemaEmployeeVM()
+            {
+                IdCinema = id,
+                EmployeeCheckBoxList = employeeCheckBoxList
+            };
+            if (employeeCheckBoxList.Count == 0)
+                employeeCheckBoxList.Add(new CheckBoxItem()
+                {
+                    IdString = "",
+                    Object = new Employee() { IdManager = null }
+                });
+            return View("Assign", cinemaEmployeeVM);
         }
 
         [HttpPost]
@@ -66,7 +118,11 @@ namespace SBD_TO_Project.Controllers
                     _db.SaveChanges();
                 }
             }
-            return RedirectToAction("Index", new { id = cinemaEmployeeVM.IdCinema });
+            Employee temp = _db.Employee.Find(cinemaEmployeeVM.EmployeeCheckBoxList.First().IdString);
+            if(temp.IdManager == null)
+                return RedirectToAction("ManagerIndex", new { id = cinemaEmployeeVM.IdCinema });
+            else
+                return RedirectToAction("Index", new { id = cinemaEmployeeVM.IdCinema });
         }
 
         public IActionResult Delete(int id)

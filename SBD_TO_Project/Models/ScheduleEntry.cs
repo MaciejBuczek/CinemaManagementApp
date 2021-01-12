@@ -18,6 +18,8 @@ namespace SBD_TO_Project.Models
         [Required]
         public double Price { get; set; }
 
+        public double? NewPrice { get; set; }
+
         [Display(Name = "Movie")]
         public int IdMovie { get; set; }
         [ForeignKey("IdMovie")]
@@ -31,5 +33,7 @@ namespace SBD_TO_Project.Models
         public int? IdScreeningRoom { get; set; }
         [ForeignKey("IdScreeningRoom")]
         public virtual ScreeningRoom ScreeningRoom { get; set; }
+
+        public virtual ICollection<Reservation> Reservations { get; set; }
     }
 }

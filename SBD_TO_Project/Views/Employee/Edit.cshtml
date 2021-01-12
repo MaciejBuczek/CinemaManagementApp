@@ -91,14 +91,21 @@
                         <div class="col">
                             <input type="submit" class="btn btn-info w-100" value="Update" />
                         </div>
-                        <div class="col">
-                            <a asp-action="Index" class="btn btn-primary w-100">Back</a>
-                        </div>
+                        @if (Model.IdManager == null)
+                        {
+                            <div class="col">
+                                <a asp-action="ManagerIndex" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-primary w-100">Back</a>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-
-

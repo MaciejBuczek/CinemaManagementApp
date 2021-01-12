@@ -22,7 +22,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            @for(int i = 1; i < Model.Seats.Count; i++)
+                            @for(int i = 1; i <= Model.Seats[0].Count; i++)
                             {
                                 <th style="text-align:center">
                                     S @i
@@ -63,13 +63,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                @* Keep this empty *@
-            </div>
         </div>
     }
     else
     {
-        <p>No seats exists.</p>
+        <p>No seat exists.</p>
     }
 </div>

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
+using SBD_TO_Project.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,33 @@ namespace SBD_TO_Project.Controllers
 
         public IActionResult Index(int Id)
         {
-            List<Schedule> schedules = _db.Schedule.Where(s => s.IdCinema == Id).Include(se => se.ScheduleEntries).ToList();
+            List<Schedule> schedules = _db.Schedule.Where(s => s.IdCinema == Id).Include(se => se.ScheduleEntries).OrderBy(s => s.Date).ToList();
             if (schedules.Count == 0)
                 schedules.Add(new Schedule() { IdCinema = Id});
+            return View(schedules);
+        }
+
+        public IActionResult IndexBrowse(int id)
+        {
+            int weekDay = (int)DateTime.Today.DayOfWeek;
+            if (weekDay == 0)
+                weekDay = 7;
+
+            DateTime beginDate = DateTime.Today.AddDays(-(weekDay - 1));
+            DateTime endDate = DateTime.Today.AddDays(( 7 - weekDay));
+            endDate += new TimeSpan(23, 59, 59);
+
+            List<Schedule> schedules = _db.Schedule.Where(s => s.IdCinema == id && s.Date <= endDate && s.Date >= beginDate).OrderBy(s => s.Date)
+                .Include(c => c.Cinema).Include(se => se.ScheduleEntries).ThenInclude(sr => sr.ScreeningRoom).ThenInclude( s => s.Seats)
+                .Include(se => se.ScheduleEntries).ThenInclude(m => m.Movie).Include(se => se.ScheduleEntries).ThenInclude(r => r.Reservations).ToList();
+
+            if(schedules.Count == 0)
+            {
+                schedules.Add(new Schedule()
+                {
+                    Cinema = _db.Cinema.Find(id)
+                });
+            }
             return View(schedules);
         }
 

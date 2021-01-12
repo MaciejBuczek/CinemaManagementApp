@@ -14,14 +14,16 @@ namespace SBD_TO_Project.Models
         [Required]
         public string Topic { get; set; }
         [Required]
-        [Display(Name = "Complaint")]
+        [Display(Name = "Complaint Content")]
         public string ComplaintContent { get; set; }
+        public string Outcome { get; set; }
         
-        /*public int? IdCustomer { get; set; }
+        [Required]
+        public string IdCustomer { get; set; }
         [ForeignKey("IdCustomer")]
-        public virtual Customer Customer { get; set; }*/
+        public virtual Customer Customer { get; set; }
         
-        public int? IdOrder { get; set; }
+        public int IdOrder { get; set; }
         [ForeignKey("IdOrder")]
         public virtual Order Order { get; set; }
     }

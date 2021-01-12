@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SBD_TO_Project.Data;
 using SBD_TO_Project.Models;
 using System;
@@ -11,15 +13,21 @@ namespace SBD_TO_Project.Controllers
     public class CinemaController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CinemaController(ApplicationDbContext db)
+        public CinemaController(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Cinema> objList = _db.Cinema;
+            IEnumerable<Cinema> objList;
+            if (User.IsInRole(WebConstants.AdminRole))
+                objList = _db.Cinema;
+            else
+                objList = _db.CinemaEmployee.Where(ce => ce.IdEmployee == _userManager.GetUserId(User)).Include(c => c.Cinema).Select(c => c.Cinema);
             return View(objList);
         }
 
@@ -48,6 +56,13 @@ namespace SBD_TO_Project.Controllers
             {
                 _db.Add(obj);
                 _db.SaveChanges();
+
+                if(User.IsInRole(WebConstants.ManagerRole))
+                {
+                    _db.Add(new CinemaEmployee() { IdCinema = obj.Id, IdEmployee = _userManager.GetUserId(User) });
+                    _db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
             return View(obj);

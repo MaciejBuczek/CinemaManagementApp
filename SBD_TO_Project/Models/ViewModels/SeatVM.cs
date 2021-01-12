@@ -10,6 +10,5 @@ namespace SBD_TO_Project.Models.ViewModels
         public int IdCinema { get; set; }
 
         public List<List<Seat>> Seats { get; set; }
-        //public SeatCheckBox[,] Seats { get; set; }
     }
 }

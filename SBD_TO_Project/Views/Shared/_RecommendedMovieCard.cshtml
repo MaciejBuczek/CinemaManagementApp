@@ -1,0 +1,35 @@
+﻿@model SBD_TO_Project.Models.Movie
+
+@{
+    var genreOutput = "";
+
+    genreOutput = "<ul>";
+    foreach (var genre in Model.MovieGenres)
+    {
+        genreOutput += "<li>";
+        genreOutput += genre.Genre.Name;
+        genreOutput += "</li>";
+    }
+    genreOutput += "</ul>";
+}
+
+<li class="badge border col-2 text-center m-2" style="display:inline-block;">
+    <br />
+    @if (Model.Title.Length > 15)
+    {
+        <a href="#" onclick="showTitle('<h1>@Model.Title<h1>')">@Model.Title.Substring(0, 15) ...</a>
+    }
+    else
+    {
+        @Model.Title
+    }
+
+    <br />
+    <br />
+    <button class="badge p-2 border w-100" style="background-color:aliceblue" onclick="showGenres('@genreOutput')">Click to see genres</button>
+    <br />
+    <br />
+
+    <img class="img-fluid d-block mx-auto mb-3 float-left" src="@(WebConstants.ImageMoviePath+Model.Image)" alt="Card image cap">
+
+</li>
