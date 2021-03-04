@@ -50,9 +50,9 @@ This project was created as final project for The Object-Oriented technology and
 Application uses MS SQL Server 2019
 ## Application exemplary usage
 ### Movies browse page
-![Algorithm schema](./screenshots/browse.jpg.jpg)
+![Algorithm schema](./screenshots/browse.jpg)
 ### Schedules browse page
-![Algorithm schema](./screenshots/schedules.jpg.jpg)
+![Algorithm schema](./screenshots/schedules.jpg)
 ### Movie details page
 ![Algorithm schema](./screenshots/details.jpg)
 ### Movie details comment section
