@@ -10,7 +10,7 @@ Cinema employees are able to manage movies, schedules, reservations and customer
   * [Manager account features](#as-cinema-manager)
   * [Admin account features](#as-admin-user)
 * [Technologies](#technologies)
-* [Application examplery useged](#application-examplery-useged)
+* [Application examplery usege](#application-examplery-usege)
 ## Introduction
 This project was created as final project for The Object-Oriented technology and Database Systems classes.
 ## Features
